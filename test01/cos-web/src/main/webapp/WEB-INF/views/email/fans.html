@@ -1,9 +1,0 @@
- <% for (fan in fans) {%>
-		<a class="fan-def" data-id="${fan.fansId}" onclick="selectFan(this)">
-			<img src="${headUrl}${fan.fansId}.jpg">
-			<div class="u">
-			    <div class="desc name">${fan.fansName}</div>
-				<div class="desc">${fan.fansDesc!"此人很懒..."}</div>
-			</div>
-		</a>
-<%}%>
