@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+<default save="jdbcSaveDaoHandler" query="jdbcSaveDaoHandler">
+</default>
+<package save="jdbcSaveDaoHandler" query="jdbcSaveDaoHandler">
+  <item>com.pyfriend.base</item>
+  <item>com.pyfriend.portal</item>
+</package>
+</config>
