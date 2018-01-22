@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>500</title>
+<style type="text/css">
+html,body{margin:0px; height:100%; }
+.index{
+display: inline-block;position: absolute;bottom: -50px;right: 200px;cursor: pointer;
+background-color: #f17c67;padding:8px 15px;border-radius:5px 
+}
+.error{
+display: inline-block;position: absolute;bottom: -50px;right: 10px;cursor: pointer;
+background-color: #376956;padding:8px 15px;border-radius:5px;color: #fff
+}
+</style>
+
+</head>
+<body style="display: flex;justify-content:center;align-items:center">
+  <div style="display: inline-block;position: relative;">
+  <div style="padding: 50px 5px;font-size: 20px;font-weight: 600;color: #666">SORRY 不知道发生了什么？程序员抓紧去解决了...</div>
+  <img id="500img" src="${sitePath}images/background/500.jpg">
+  <a onclick="goindex()" class="index">回到首页</a>
+  <a onclick="senderror()" class="error">发送错误给管理员</a>
+  </div>
+</body>
+<script type="text/javascript"> 
+var goindex=function(){
+	window.document.location.href="${sitePath}";
+}
+var senderror=function(){
+	window.document.location.href="${sitePath}send/errorinfo?info="+encodeURIComponent(curWwwPath);
+}
+</script>
+</html>

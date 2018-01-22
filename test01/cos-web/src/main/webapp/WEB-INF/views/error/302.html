@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<% include("/common/include.html"){} %>
+<title>302</title>
+<style type="text/css">
+html,body{margin:0px; height:100%; }
+.index{
+display: inline-block;position: absolute;bottom: -50px;right: 10px;cursor: pointer;
+background-color: #f17c67;padding:8px 15px;border-radius:5px 
+}
+</style>
+</head>
+<body style="display: flex;justify-content:center;align-items:center">
+  <div style="display: inline-block;position: relative;margin-bottom: 100px">
+	  <div style="padding: 50px 5px;font-size: 20px;font-weight: 600;color: #666">SORRY 您没有访问权限，请登录或转到首页...</div>
+	  <img id="500img" src="${sitePath}images/background/302.png">
+	  <a onclick="goindex()" class="index">回到首页</a>
+  </div>
+</body>
+<script type="text/javascript"> 
+var goindex=function(){
+	window.document.location.href="${sitePath}";
+}
+</script>
+</html>

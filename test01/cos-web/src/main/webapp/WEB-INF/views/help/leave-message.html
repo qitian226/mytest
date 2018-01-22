@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/jquery.md5.js"></script>
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/site/common.js"></script>
+<script type="text/javascript" src="${sitePath}js/layui/layui.js"></script>
+<script src="${sitePath}js/ckeditor/ckeditor.js"></script>
+<link href="${sitePath}styles/main.css" rel="stylesheet" type="text/css">
+<link href="${sitePath}js/layui/css/layui.css" rel="stylesheet" type="text/css">
+<title>最美 - <% if(isNotEmpty(topic.title)){%>
+   ${topic.title} <%}else{%>主题创建
+   <%}%>
+</title>
+</head>
+<body>
+<%
+include("/common/header.html"){}
+%>
+<div style="width: 800px;margin: 80px auto">
+<div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">介绍<span class="red">*</span></label>
+    <div class="layui-input-inline" style="width: 610px">
+      <textarea id="desc" maxlength="300" style="resize:none" name="desc" placeholder="请输入你的个人介绍" class="layui-textarea"></textarea>
+    </div>
+    <div class="layui-form-mid layui-word-aux">不能输入特殊字符</div>
+  </div>
+  </div>
+</body>
+</html>

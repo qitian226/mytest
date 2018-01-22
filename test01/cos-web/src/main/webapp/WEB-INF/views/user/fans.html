@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<% include("/common/include.html"){} %>
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/site/user/fans.js"></script>
+<link href="${sitePath}styles/main.css" rel="stylesheet" type="text/css">
+<link href="${sitePath}styles/userstyle.css" rel="stylesheet" type="text/css">
+<title>${user.nickname}的最美-关注</title>
+</head>
+<body style="background-color: #eee">
+<%
+include("/common/header.html"){}
+%>
+<div class="top_panel">
+<%
+include("common/top.html"){}
+%>
+</div>
+<div id="main">
+<div id="photos" style="margin-top: 10px">
+<% if(total==0){%>
+  <span class="attention_null">还没有粉丝哦</span>
+ <%}else{%> 
+ <div class="item" style="width: 100%;">
+ <ul id="fans" class="pic">
+ </ul>
+ </div>
+ <%} %>
+ </div>
+</div>
+<%
+include("/common/footer.html"){}
+%>
+</body>
+<script type="text/javascript">
+var userid="${user.id}";
+var range = 20;
+var maxnum = Math.ceil(${total}/range);
+</script>
+
+</html>

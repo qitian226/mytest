@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+ <div style="width: 100%;padding:5px">
+ <div>
+ <div class="layui-btn-group">
+  <span class="layui-btn">
+    <input id="uname" type="text" style="width:200px;height: 30px;margin-right:3px;border: solid 1px #eee;"/>
+    <i class="layui-icon uquery" style="font-size: 13px"  id="s-btn">查询</i>
+  </span>
+  </div>
+  <div class="layui-btn-group">
+    <button class="layui-btn" onclick="showDicWindow()">添加字典</button>
+    <button class="layui-btn" onclick="showDicitemWindow()">添加字典项</button>
+  </div>
+
+ </div>
+ <table id="t-dic" lay-filter="t-f"></table>
+ </div>
+ <div style="width: 100%;padding:5px">
+ <table id="t-dic-item" lay-filter="t-f-item"></table>
+ </div>
+<script>
+
+var  table,form,tdic,tdicitem;
+var initTable=function(url_){
+	 tdic=table.render({
+	       id:"t",
+		   elem: "#t-dic" //指定原始表格元素选择器（推荐id选择器）
+		  ,height: 300
+		  ,url:url_
+		 ,page: true
+		  ,cols: [[
+		     {field: 'dictCode',event: 'select', title: '字典CODE', width: 120,fixed:true}
+		    ,{field: 'dictName',event: 'select', title: '字典名称', width: 120,fixed:true}
+		    ,{field: 'dictDesc',event: 'select', title: '字典描述', width: 120}
+		    ,{field: 'status',event: 'select', title: '状态', width: 120}
+		    ]] //设置表头
+		});
+}
+
+var initTableitem=function(id_){
+	  table.render({
+	       id:"t-item",
+		   elem: "#t-dic-item" //指定原始表格元素选择器（推荐id选择器）
+		  ,height: 300
+		  ,url:null
+		 ,page: false
+		  ,cols: [[
+		     {field: 'dictCode',event: 'select', title: '字典CODE', width: 120,fixed:true}
+		    ,{field: 'dictitemName',event: 'select', title: '字典项名称', width: 120,fixed:true}
+		    ,{field: 'dictitemValue',event: 'select', title: '字典项值', width: 120}
+		    ,{field: 'dictitemDesc',event: 'select', title: '字典项描述', width: 120}
+		    ,{field: 'status',event: 'select', title: '状态', width: 120}
+		    ]] //设置表头
+		});
+}
+var selectDic="",selectDicitem="";
+layui.use(['table','form'], function(){
+	   table = layui.table;
+	   form = layui.form;
+	   var url="${sitePath}sys/qdic";
+	   initTable(url);
+	   initTableitem();
+	   table.on('tool(t-f)', function(obj){
+		    var data = obj.data;
+		    if(obj.event === 'select'){
+		    	selectDic=data.dictCode;
+		    	 var url_="${sitePath}sys/qdicitem?code="+data.dictCode;
+		    	 table.reload('t-item', {
+		    		  url: url_
+		    		});
+		      }
+		    }
+        );
+	   table.on('tool(t-f-item)', function(obj){
+		    var data = obj.data;
+		    if(obj.event === 'select'){
+		    	selectDicitem=data.dictCode;
+		      }
+		    }
+       );
+ });
+
+$("#s-btn").on("click",function(e){
+	var uname=$("#uname").val();
+	if(uname.length==0){
+		layer.msg("输入点什么哦!");
+		return false;
+	}
+	 var url_="${sitePath}sys/qdic";
+	 tdic.reload({
+		  where: {
+			  word:uname
+		  }
+		}); 
+});
+var showDicWindow = function() {
+	if (checklogin() == false) {
+		return false;
+	}
+	if(selectDic==""){
+		layer.msg("请选择一条字典!");
+		return false;
+	}
+	layer.open({
+		id : "dicwin",
+		type : 2,
+		title : "新增字典",
+		closeBtn : 1,
+		shadeClose : true,
+		shade : [ 0.1 ],
+		fixed : true,
+		resize : false,
+		area : [ '560px', '560px' ],
+		anim : 5,
+		content : [ localhostPath + "${sitePath}sys/adddic?dic="+selectDic, 'no' ], 
+		end : function() {
+		},
+		success : function(layero, index) {
+		}
+	})
+};
+var showDicitemWindow = function() {
+	if (checklogin() == false) {
+		return false;
+	}
+	if(selectDicitem==""){
+		layer.msg("请选择一条字典项!");
+		return false;
+	}
+	layer.open({
+		id : "dicwin",
+		type : 2,
+		title : "新增字典项",
+		closeBtn : 1,
+		shadeClose : true,
+		shade : [ 0.1 ],
+		fixed : true,
+		resize : false,
+		area : [ '560px', '560px' ],
+		anim : 5,
+		content : [ localhostPath + "${sitePath}sys/adddicitem", 'no' ], 
+		end : function() {
+		},
+		success : function(layero, index) {
+		}
+	})
+};
+</script>
+</html>

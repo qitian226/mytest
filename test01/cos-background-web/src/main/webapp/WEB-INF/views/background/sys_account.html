@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+ <div style="width: 100%;padding:5px">
+ <div>
+ <div class="layui-btn-group">
+  <span class="layui-btn layui-btn-small">
+    <input id="uname" type="text" style="width:200px;height: 26px;border: solid 1px #eee;"/>
+    <i class="layui-icon uquery"  id="s-btn" >查询</i>
+  </span>
+  <button class="layui-btn layui-btn-small" onclick="lockUser()">
+    <i class="layui-icon lock">锁定</i>
+  </button>
+  <button class="layui-btn layui-btn-small" onclick="unLockUser()">
+    <i class="layui-icon unlock">解锁</i>
+  </button>
+</div>
+ </div>
+ <table id="t-user" lay-filter="t-f"></table>
+ </div>
+ <script type="text/html" id="titleTpl">
+  <input type="checkbox" name="c" value="{{d.id}}"  lay-skin="primary">
+</script>
+
+<script type="text/html" id="typeTpl">
+  {{# if(d.type === 'e'){ }}
+    <span style="color: #F581B1;">管理</span>
+  {{#  } }}
+ {{# if(d.type === 't'){ }}
+    <span style="color: #F581B1;">临时</span>
+  {{#  } }}
+ {{# if(d.type === 's'){ }}
+    <span style="color: #F581B1;">会员</span>
+  {{#  } }}
+</script>
+
+<script>
+var  table,form;
+var initTable=function(url_){
+	  table.render({
+	       id:"t",
+		   elem: "#t-user" //指定原始表格元素选择器（推荐id选择器）
+		  ,height: 600
+		  ,url:url_
+		 ,page: true
+		  ,cols: [
+		     [{field: 'id',title: ' ', width: 50,fixed:true,templet: '#titleTpl'}
+		     ,{field: 'userName', title: '实名', width: 120,fixed:true}
+		    ,{field: 'accountName', title: '用户名', width: 120,fixed:true}
+		    ,{field: 'type', title: '类型', width: 100,fixed:true,templet:'#typeTpl'}
+		    ,{field: 'islocked', title: '锁定', width: 120}
+		    ,{field: 'status', title: '状态', width: 120}
+		    ,{field: 'nickname', title: '昵称', width: 120}
+		    ,{field: 'sex', title: '性别', width: 120}
+		    ,{field: 'mobile', title: '电话', width: 120}
+		    ,{field: 'email', title: '邮箱', width: 120}
+		    ,{field: 'vip', title: 'VIP等级', width: 120}
+		    ,{field: 'level', title: '级别', width: 120}
+		    ,{field: 'fans', title: 'FANS数目', width: 120}
+		    ,{field: 'attention', title: '关注用户数', width: 120}
+		    ,{field: 'topicCount', title: '主题数', width: 120}
+		    ,{field: 'entryCount', title: '单片数', width: 120}
+		    ]] //设置表头
+		});
+}
+layui.use(['table','form'], function(){
+	   table = layui.table;
+	   form = layui.form;
+	   var url="${sitePath}sys/quser";
+	   initTable(url);
+	})
+ 
+ var lockUser=function(){
+	 var ids_=new Array();
+	$("input:checkbox[name=c]:checked").each(function(){
+		ids_.push($(this).val());
+	});
+	if(ids_.length==0){
+		layer.msg("需要选择用户!");
+		return false;
+	} 
+	$.ajax({
+		url :"${sitePath}sys/lockuser",
+		dataType : "json",
+		data:{ids:ids_.toString()},
+		type : "post",
+		success : function(data) {
+		 if(data.isPass=="ok"){
+			 layer.msg(data.msg);
+			 loadPage('${sitePath}sys/user.html');
+		 }
+		}
+	});
+}
+var unLockUser=function(){
+	 var ids_=new Array();
+	$("input:checkbox[name=c]:checked").each(function(){
+		ids_.push($(this).val());
+	});
+	if(ids_.length==0){
+		layer.msg("需要选择用户!");
+		return false;
+	} 
+	$.ajax({
+		url :"${sitePath}sys/unlockuser",
+		dataType : "json",
+		data:{ids:ids_.toString()},
+		type : "post",
+		success : function(data) {
+		 if(data.isPass=="ok"){
+			 layer.msg(data.msg);
+			 loadPage('${sitePath}sys/user.html');
+		 }
+		}
+	});
+}
+$("#s-btn").on("click",function(e){
+	var uname=$("#uname").val();
+	if(uname.length==0){
+		layer.msg("输入点什么哦!");
+		return false;
+	}
+	 var url="${sitePath}sys/search?word="+uname;
+	 initTable(url); 
+});
+</script>
+</html>

@@ -1,0 +1,36 @@
+<div class="top_info">
+	<a class="top_user" target="_blank" href="${sitePath}u/${user.accountName}">
+	  <img src="${headUrl}${user.id}.jpg">
+	</a>
+	<div class="user_panel">
+		<div class="top_u">
+			<% if(user.sex==0){%> <span class="man_name"> ${user.nickname!""}</span> <%} else {%> <span class="woman_name"> ${user.nickname!""}</span> <%}%> <%
+			if(isNotEmpty(user.vip) && user.vip>=1){ %> <span class="vip_t">${user.vip}</span> <% } %>
+			<div class="top_level">
+				<% if(isNotEmpty(user.level)){for(var i=0;i
+				<user.level;i++) {%> <span class="star_s"></span> <% }} %> 
+			</div>
+		</div>
+		<div class="top_name">
+			<% if(isNotEmpty(user.proviceName) && isNotEmpty(user.cityName)) { %> <span class="address">${user.proviceName} ${user.cityName}</span> <% } %> <span
+				class="head-topic">${user.topicCount!0} 主题 ${user.entryCount!0} 单张</span>
+		</div>
+		<div class="top_desc">${user.desc}</div>
+	</div>
+	<div style="width: 100%; height: 120px"></div>
+	<div class="top_ext">
+		<div style="padding: 5px;">
+			<a class="fans" target="_blank" href="${sitePath}u/${user.accountName}/fans.html">${user.fans} 彩粉</a> <a class="attention" target="_blank"
+				href="${sitePath}u/${user.accountName}/attention.html">${user.attention} 关注</a>
+		</div>
+		<% if(isNotEmpty(attention.isAttention) && attention.isAttention){ %>
+		<div id="attention-panel">
+			<a data-id="${user.id}" class="attention_btn">已关注</a> <% if(isowner=="no"){ %> <a onclick="showEmail('${user.id}')" class="letter_btn">私信</a> <%}%>
+		</div>
+		<% } else{ if(isowner=="no"){ %>
+		<div id="attention-panel">
+			<a data-id="${user.id}" onclick="attention(this)" class="attention_btn">关注</a> <a onclick="showEmail('${user.id}')" class="letter_btn">私信</a>
+		</div>
+		<% } }%>
+	</div>
+</div>

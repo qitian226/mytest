@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/jquery-3.1.1.min.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/site/common.js"></script>
+ <style>
+ body{
+ margin:0;
+ padding: 0;
+ }
+ .left-page{
+ position:fixed; top:0;left:20px;height:100%;width: 50px;display: flex;flex-direction:column;justify-content:center;
+ }
+ .left-arrow{
+  border-radius:3px; display:inline-block;cursor:pointer; background:rgba(72, 72, 72, 0.6) url(/images/ico/left_page.svg) no-repeat scroll 3px center;width:50px;height:100px
+ }
+ .left-arrow:HOVER {
+	background:rgba(72, 72, 72, 0.3) url(/images/ico/left_page.svg) no-repeat scroll 3px center;
+}
+.right-page{
+ position:fixed; top:0;right:20px;height:100%;width: 50px;display: flex;flex-direction:column;justify-content:center;
+ }
+ .right-arrow{
+  border-radius:3px; display:inline-block;cursor:pointer; background:rgba(72, 72, 72, 0.6) url(/images/ico/right_page.svg) no-repeat scroll -10px center;width:50px;height:100px
+ }
+ .right-arrow:HOVER {
+	background:rgba(72, 72, 72, 0.3) url(/images/ico/right_page.svg) no-repeat scroll -10px center;
+}
+.board{
+  width:100%;height:100%;overflow:hidden;background-color: #888;display: flex;flex-direction:column;justify-content:center;align-items:center
+}
+.board img{
+    max-width: 100%;max-height: 100%;
+}
+.num-index {
+    background: rgba(76, 76, 76, 0.6);
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 5px 10px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    z-index: 90;
+    }
+    .num-index span {
+    padding: 3px;
+    }
+ </style>
+</head>
+<body>
+<div id="main" style="height: 600px">
+    <div class="num-index"><span id="index"></span>/<span id="total"></span></div>
+	<div class="left-page">
+	  <a class="left-arrow" onclick="prevImg()"></a>
+	</div>
+	<div class="board">
+	 <img id="main_img" style="display: none">
+	</div>
+	<div class="right-page">
+	<a class="right-arrow"  onclick="nextImg()"></a>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+   var ids,curIndex;
+   var id='${eid}';
+ $().ready(function(){
+	 var p = window.parent.document;
+		var iframe=p.getElementById("layui-layer-iframe1");
+		var p = window.parent.document;
+		var f=$(p).find(".layui-layer-iframe");
+		$("#main").height(f.height());
+		ids=parent.getDataIds();
+		 for(var i=0;i<ids.length;i++){
+			 if(id==ids[i]){
+			 curIndex=i;
+			 break;
+			 }
+		 }
+		$("#main_img").attr("src","${imgUrl}"+ids[curIndex]+".jpg"); 
+		$('#main_img').fadeIn(1000);
+		$('#total').text(ids.length);
+		$('#index').text(curIndex+1);
+ })
+ 
+ function prevImg(){
+	if(curIndex>=1 && curIndex<ids.length){
+		 curIndex=--curIndex
+		 $('#main_img').fadeOut(500,function(){
+			 $("#main_img").attr("src","${imgUrl}"+ids[curIndex]+".jpg");
+			 $('#main_img').fadeIn(1000);
+			 $('#index').text(curIndex+1);
+		 });
+		
+	}
+	return false;
+ }
+ 
+ function nextImg(){
+	 if(curIndex<ids.length-1){
+		 curIndex=++curIndex;
+		    $('#main_img').fadeOut(500,function(){
+		    	$("#main_img").attr("src","${imgUrl}"+ids[curIndex]+".jpg");
+				$('#main_img').fadeIn(1000);
+				$('#index').text(curIndex+1);
+		    });
+		}
+	 return false;
+ }
+</script>
+</html>

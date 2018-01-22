@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <bean id="ysBaseDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${ys-base.jdbc.mysql.driver}"/>
+        <property name="url" value="${ys-base.jdbc.mysql.url}"/>
+        <property name="username" value="${ys-base.jdbc.mysql.username}"/>
+        <property name="password" value="${ys-base.jdbc.mysql.password}"/>
+        <property name="connectionProperties" value="${ys-base.jdbc.mysql.connectionProperties}" />
+        <!-- 连接数据相关参数 -->
+		<!--initialSize: 初始化连接-->    
+		<property name="initialSize" value="30" />
+		 <!--minIdle: 最小空闲连接-->    
+		<property name="minIdle" value="5" />
+		  <!--maxIdle: 最大空闲连接-->    
+		<property name="maxIdle" value="20" />
+		  <!--maxActive: 最大连接数量-->    
+		<property name="maxActive" value="150" />
+		<!--maxWait: 超时等待时间以毫秒为单位 1000等于60秒-->  
+		<property name="maxWait" value="10000" />
+		<!-- 事务相关的属性 -->
+		<property name="defaultAutoCommit" value="true" />
+		<!-- 连接健康情况 -->
+		<property name="validationQuery" value="/* ping */ select 1" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnReturn" value="false" />
+		<property name="testOnBorrow" value="false" />
+		 <!-- 在空闲连接回收器线程运行期间休眠的时间值,以毫秒为单位. -->  
+		<property name="timeBetweenEvictionRunsMillis" value="30000" /><!--回收Idel连接的时间间隔,30秒 -->
+		<property name="minEvictableIdleTimeMillis" value="1800000" /><!--Idle时间,超过后回收,1800秒 -->
+		<property name="numTestsPerEvictionRun" value="150" /><!--和maxActive数值一致 -->
+		<!-- 连接泄漏回收参数 -->
+		<!-- 连接被泄露时是否打印 -->
+		<property name="logAbandoned" value="true" />
+		<!--removeAbandoned: 是否自动回收超时连接--> 
+		<property name="removeAbandoned" value="true" />
+		<!--removeAbandonedTimeout: 超时时间(以秒数为单位)-->
+		<property name="removeAbandonedTimeout" value="180" /><!--泄露连接180秒后清除 -->
+    </bean>
+     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="ysBaseDataSource"/>
+    </bean>
+    <!-- 配置事务异常封装 -->
+    <!--<bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />-->
+
+    <!-- 如果没有设置transaction-manager的值，则spring以缺省默认的事务管理器来处理事务，默认事务管理器为第一个加载的事务管理器 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>
+

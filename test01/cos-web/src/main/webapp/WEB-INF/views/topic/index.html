@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<% include("/common/include.html"){} %>
+<!-- <script type="text/javascript" charset="utf-8" src="${sitePath}/js/carousel_1.js"></script> -->
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/site/topic/index.js"></script>
+<link href="${sitePath}styles/main.css" rel="stylesheet" type="text/css">
+<link href="${sitePath}styles/topic.css" rel="stylesheet" type="text/css">
+<link href="${sitePath}styles/carousel-style.css" rel="stylesheet" type="text/css">
+<title>最美-${topicTypeTitle}</title>
+ <style type="text/css">
+ .t_content {
+    position: relative;
+    padding: 5px 0;
+    margin: 0 auto;
+    margin-top: 60px;
+    width: 100%;
+    height: 300px;
+    background: url(${sitePath}images/background/topic/1.jpg) no-repeat 0 0;
+    color: #666;
+    border: solid 1px #E0E0E0;
+ }
+ </style>
+</head>
+<body>
+<%
+include("/common/header.html"){}
+%>
+<div class="t_content">
+<div class="t_nav">
+<% for(var tag in tags) { %>
+<a target="_blank" href="${sitePath}topic/${topictype}/${tag.dictitemName}/index.html">${tag.dictitemValue}</a>
+<%}%>
+</div>
+</div>
+<div id="main">
+<div class="nav">
+  <span class="title"><label>最热</label> ${topicTypeTitle}</span><a id="show-url" class="page">翻页布局</a>
+</div>
+<div id="container" class="content">
+    <% for(topics in lists) {%>
+    <ul id="${topicsLP.index}" class="col">
+    <% for(item in topics.list){ %>
+    <li>
+    <div class="p_img">
+    <a class="ts" href="${sitePath}topic/${item.classify}/${item.id}.html" target="_blank">
+	    <img src="${imgUrl}${item.id}.jpg?t=${item.currVersion}" style="height:${item.imgHeight}px">
+	    <a class="entry_num" style="opacity: 0;">${item.entryNum} 页</a>
+    </a>
+    <div class="title">${item.title}</div>
+    <div class="tag">
+	    <div class="c_nav">
+		    <a href="${sitePath}u/${item.accountName}" target="_blank">
+		    <img src="${headUrl}${item.createBy}.jpg">
+		    </a>
+	    </div>
+	    <div class="content">
+		    <div class="tags" style="margin-top:1px">
+		     <span class="star" title="评分">${item.gradeString}</span> 
+			 <span class="transpond" title="分享">${item.shareString}</span> 
+		    </div>
+		    <div class="tdesc">
+		    	<a href="${sitePath}u/${item.accountName}" target="_blank">${item.author}</a> 彩集于 ${item.createTimeString}
+		    </div>
+	    </div>
+    </div>
+    </div>
+    <% } %>
+    </li>
+    </ul>
+ <% } %> 
+</div>
+</div>
+<%
+include("/common/footer.html"){}
+%>
+</body>
+<script type="text/javascript">
+var range = 30;          
+var maxnum = Math.ceil(${total}/range);//设置加载最多次数
+		$().ready(function(){
+			 initScreenWidth("main",function(){
+				 if(window.screen.width>1500){
+					 $("#container").append("<ul class=\"col\"></ul>");
+					 $("#show-url").attr("href","${sitePath}topic/${topictype}/p/index.html?pageno=1&column=6");
+				 } 
+				 else
+				 {
+				 $("#show-url").attr("href","${sitePath}topic/${topictype}/p/index.html?pageno=1&column=5");	 
+				 }
+			 });
+		});
+</script>
+</html>

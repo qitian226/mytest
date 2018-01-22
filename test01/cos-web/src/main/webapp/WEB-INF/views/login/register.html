@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link href="${sitePath}js/layui/css/layui.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/site/regular.js"></script>
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/site/common.js"></script>
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/site/login/register.js"></script>
+<script type="text/javascript" charset="utf-8" src="${sitePath}/js/layui/layui.js"></script>
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/crypto/crypto-js.js"></script>
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/crypto/encrypt.js"></script>
+<style>
+body {
+	box-sizing: border-box;
+	font-family: "微软雅黑", Arial, sans-serif;
+	font-size: 13px;
+	margin: 0;
+	padding: 0;
+	color: #555;
+}
+
+.input-group {
+	border-collapse: separate;
+	display: table;
+	position: relative;
+}
+
+.input-lg {
+	font-size: 14px;
+}
+
+.has-feedback {
+	position: relative;
+}
+
+.form-group {
+	margin-bottom: 15px;
+	overflow: hidden;
+}
+
+.input-group-addon:first-child {
+	border-right: 0 none;
+}
+
+.input-group-addon {
+	background-color: #eee;
+	font-size: 14px;
+	padding: 6px 12px;
+	text-align: center;
+	background-color: #dff0d8;
+	border: solid 1px #3c763d;
+	color: #3c763d;
+	vertical-align: middle;
+	white-space: nowrap;
+	display: table-cell;
+	width: 40px;
+}
+
+.form-control {
+	border: 1px solid #3c763d;
+	color: #555;
+	height: 30px;
+	font-size: 14px;
+	line-height: 1.42857;
+	padding: 6px 12px;
+	width: 200px;
+	display: table-cell;
+}
+
+.form-control::-moz-placeholder {
+	color: #999;
+	opacity: 1;
+}
+
+.btn-success {
+	background-color: #5cb85c;
+	border-color: #4cae4c;
+	color: #fff;
+}
+
+.btn {
+	-moz-user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 2px;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 1.42857;
+	margin-bottom: 0;
+	padding: 8px 12px;
+	text-align: center;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.btn:HOVER {
+	background-color: #3c763d;
+}
+
+.pass_l {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url(${sitePath}images/register/password.svg) no-repeat 2px
+		center;
+}
+
+.user_l {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url(${sitePath}images/register/user.svg) no-repeat 2px
+		center;
+}
+
+.nick_l {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url(${sitePath}images/register/nick.svg) no-repeat 2px
+		center;
+}
+
+.mobile_l {
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url(${sitePath}images/register/mobile.svg) no-repeat 2px
+		center;
+}
+
+#reg a {
+	color: #FFA500 !important;
+}
+
+#reg a:HOVER {
+	color: #B8860B !important;
+}
+
+#l_title {
+	margin: 0 auto;
+	width: 292px;
+	overflow: hidden;
+}
+
+.l_label {
+	display: block;
+	color: #5cb85c;
+	font-size: 16px
+}
+
+#regDiv {
+	display: inline-block;
+	margin: 3px auto
+}
+
+#regimg {
+	width: 150px;
+	height: 50px;
+	float: right;
+}
+
+#reg {
+	margin-top: 10px;
+	display: flex;
+	justify-content: space-between
+}
+.s_panel{
+    display: flex;
+	justify-content: space-between;
+	align-items:center;
+}
+.statment{
+ padding: 2px;
+ display: inline-block;
+}
+</style>
+</head>
+<body>
+	<div id="l_title">
+		<span class="l_label">欢迎注册最美</span>
+		<div id="regDiv">
+			<div class="form-group has-success has-feedback">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="user_l"></i></span> <input type="text" name="reguser" maxlength="10" class="form-control input-lg"
+						id="reguser" placeholder="用户名(4至12位小写字母和数字)">
+				</div>
+			</div>
+			<div class="form-group has-success has-feedback">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="nick_l"></i></span> <input type="text" name="nickname" maxlength="10" class="form-control input-lg"
+						id="nick_name" placeholder="昵称(2至10位小写英文或汉字)">
+				</div>
+			</div>
+			<div class="form-group has-success has-feedback">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="mobile_l"></i></span> <input type="mobile" name="mobile" maxlength="11" class="form-control input-lg"
+						id="mobile" placeholder="手机号">
+				</div>
+			</div>
+			<div class="form-group has-success has-feedback">
+				<div class="input-group" style="width: 100%">
+					<span class="input-group-addon"><i class="pass_l"></i></span> <input type="password" name="regpass" maxlength="16" class="form-control input-lg"
+						id="regpass" placeholder="密码(8至16位字符或数字)">
+				</div>
+			</div>
+			<div class="form-group has-success has-feedback">
+				<input id="regcode" maxlength="4" name="regcode" type="text" class="form-control input-lg" style="width: 100px; padding-right: 5px; float: left"
+					placeholder="验证码"> <img id="regimg" src="${sitePath}securitycode" onclick="loadimg()">
+			</div>
+			<div class="s_panel layui-form">
+				 <input type="checkbox" name="" title="同意协议" lay-skin="primary" lay-filter="agreement"> 
+				 <a target="_blank" class="statment" href="${sitePath}statement.html">阅读协议</a>
+			</div>
+			<button type="button" onclick="regUser()" style="width: 100%; margin-top: 10px" class="btn btn-success btn-lg">注 册</button>
+			<div id="reg">
+				<a href="#">忘记密码</a> <a href="${sitePath}login">返回登录</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

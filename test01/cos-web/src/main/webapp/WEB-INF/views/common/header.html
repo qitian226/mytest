@@ -1,0 +1,19 @@
+<div id="header" class="head">
+<ul style="float:left;">
+ <li style="padding:0 10px 0 50px;"><a class="logo" href="${sitePath}index.html"></a></li>
+ <li style="padding:5px 0">
+ <form action="${sitePath}beauty" method="get" target="_blank" class="input-group" style="position:relative">
+      <input name="word" type="text"  class="search-input" placeholder="找你所爱...">
+      <input type="submit" class="s_btn" value="">
+    
+</form>
+ </li>
+ <li style="margin-left:10px"></li>
+ <% for(var item in topictypes) { %>
+ <li style="font-weight:600;"><a href="${sitePath}topic/${item.dictitemName}/index.html" target="_blank">${item.dictitemValue}</a></li>
+ <% } %>
+ </ul>
+ 
+ <ul id="llogin" style="float:right;margin-right:10px;">
+</ul>
+</div>

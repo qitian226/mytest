@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <link rel="stylesheet" href="${sitePath}js/layui/css/layui.css">
+ <link rel="stylesheet" href="${sitePath}js/jquery-smartmenu/css/smartmenu.css">
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/jquery-3.1.1.min.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/site/regular.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/jquery.md5.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/site/common.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/jquery-smartmenu/js/jquery-smartmenu.js"></script>
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/layui/layui.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/site/email/box_email.js"></script>
+ <link href="${sitePath}styles/box_email.css" rel="stylesheet" type="text/css">
+ <style>
+ .box_head .photo{
+    background: rgba(0, 0, 0, 0) url("${sitePath}u/image/${fromUser.id}.jpg") no-repeat scroll center center;
+    height:60px;
+    width:60px;
+    border-radius:60px;
+    display: inline-block;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;transform: scale(1);
+    margin: 15px 0px 0px 2px; 
+    flex-shrink: 0;flex-grow:0
+ }
+ </style>
+ </head>
+ <body class="body_style" onresize="resizeBodyHandler()">
+ <div id="nav">
+	<div class="layui-tab layui-tab-brief user-nav"  style="display: flex;justify-content:center;flex-direction:column" lay-filter="bar">
+		<div class="box_head">
+		 <span class="photo"></span>
+		 <div style="padding:5px 0 0 10px">
+		 <div>
+		  <span style="font-size: 15px;color: #fff">${fromUser.nickname}</span>
+		  <%if(isNotEmpty(fromUser.vip) && fromUser.vip>0){%>
+          <span class="vip">${fromUser.vip}</span>
+          <% } %>
+          </div>
+		 <div class="desc">${fromUser.desc}</div>
+		 </div>
+		</div>
+	  <ul class="layui-tab-title" style="border-bottom: none;flex-shrink: 0;flex-grow:0">
+	    <li class="layui-this"><span class="u-1">粉丝</span></li>
+	    <li><span class="u-3">关注</span></li>
+	    <li><span class="history-1">历史</span></li>
+	  </ul>
+	  <div id="layui_tab" class="layui-tab-content" style="flex-grow:1;background-color:rgba(0,0,0,0.3);overflow:hidden;margin: 0;height:100%;padding: 0;overflow-y:auto">
+				<!-- fans -->
+				<div id="fans" class="layui-tab-item layui-show" style="height: 100%;position: relative;">
+				 <div class="fans_panel">
+				  <div id="fans_group" class="layui-collapse" style="border: none" lay-filter="fan-filter">
+				     <% for(fansgroup in groups) { %>
+					  <div class="layui-colla-item">
+					    <h2 class="layui-colla-title" data-title="${fansgroup.name}" data-id="${fansgroup.id}">${fansgroup.name}</h2>
+					    <% if(fansgroupLP.first){%>
+					    <div id="fan_${fansgroup.id}" class="layui-colla-content layui-show"  data-id="${fansgroup.id}"  style="border: none;">
+					     <div>
+					     <% for (fan in fans) {%>
+					     <a  data-id="${fan.fansId}" data-name="${fan.fansAccountName}" onclick="selectFan(this)" class="fan-def">
+					       <img src="${headUrl}${fan.fansId}.jpg">
+					       <div class="u">
+						       <div class="desc name">${fan.fansName}</div>
+						       <div class="desc">${fan.fansDesc!"此人很懒..."}</div>
+					       </div>
+					     </a>
+					     <%}%>
+					     </div>
+					    </div>
+					    <%} else {%>
+					     <div id="fan_${fansgroup.id}" class="layui-colla-content" data-id="${fansgroup.id}" style="border: none;">
+					     </div>
+					     <%}%>
+					  </div>
+					  <%}%> 
+					</div>
+					</div>
+					<div  id="groups_panel">
+					  	 <input id="fansgroup-name" maxlength="15" data-id="" placeholder="分组">
+	                     <a class="del" onclick="delgroup()"></a>
+	                     <a class="add" onclick="addgroup()"></a> 
+                   </div>
+				 </div>
+				 <!-- attention -->
+				<div id="attention" class="layui-tab-item" style="height: 100%;position: relative;">
+				 <div class="fans_panel">
+				 <div id="attentions_group" class="layui-collapse" style="border: none" lay-filter="atten-filter">
+				     <% for(attengroup in attengroups) { %>
+					  <div class="layui-colla-item">
+					    <h2 class="layui-colla-title" data-title="${attengroup.name}" data-id="${attengroup.id}">${attengroup.name}</h2>
+					    <% if(attengroupLP.first){%>
+					    <div id="atten_${attengroup.id}" class="layui-colla-content layui-show"  data-id="${attengroup.id}"  style="border: none;">
+					     <div>
+					     <% for (atten in attens) {%>
+					     <a  data-id="${atten.accountId}" data-name="${atten.accountName}" onclick="selectFan(this)" class="atten-def">
+					       <img src="${headUrl}${atten.accountId}.jpg">
+					       <div class="u">
+						       <div class="desc name">${atten.name}</div>
+						       <div class="desc">${atten.desc!"此人很懒..."}</div>
+					       </div>
+					     </a>
+					     <%}%>
+					     </div>
+					    </div>
+					    <%} else {%>
+					     <div id="atten_${attengroup.id}" class="layui-colla-content" data-id="${attengroup.id}" style="border: none;">
+					     </div>
+					     <%}%>
+					  </div>
+					  <%}%> 
+					</div>
+					</div>
+					<div  id="groups_panel">
+					  	 <input id="attengroup-name"  maxlength="15"  data-id="" data-title="" placeholder="分组">
+	                     <a class="del" onclick="delattengroup()"></a>
+	                     <a class="add" onclick="addattengroup()"></a> 
+                   </div>
+				</div>
+                <!-- history -->
+	            <div id="history" class="layui-tab-item" style="position: relative;">
+	             <div class="layui-collapse" style="border: none;overflow: hidden" lay-filter="filter-his">
+	             <div class="layui-colla-item">
+						<h2 class="layui-colla-title">今天</h2>
+						<div class="layui-colla-content layui-show" data-id="1"
+							style="border: none;">
+							<% if(isNotEmpty(infos) && infos.~size>0){
+							  for(email in infos["today"]){
+							    %>
+							    <a class="his_item" data-id="${email.id}" >${email.fromAccountName}@ ${email.toAccountName}<br>${email.createTimeString}</a>
+							    <%
+							  }
+							  }
+							 %>
+							<a></a>
+						</div>
+					</div>
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">昨天</h2>
+						<div class="layui-colla-content" data-id="2"
+							style="border: none;">
+							<% if(isNotEmpty(infos) && infos.~size>0){
+							  for(email in infos["preday"]){
+							    %>
+							  <a  class="his_item"  data-id="${email.id}">${email.fromAccountName}@ ${email.toAccountName}<br> ${email.createTimeString}</a>
+							    <%
+							  }
+							  }
+							 %>
+						</div>
+					</div>
+					  <div class="layui-colla-item">
+						<h2 class="layui-colla-title">本周</h2>
+						<div class="layui-colla-content" data-id="7"
+							style="border: none;">
+								<% if(isNotEmpty(infos) && infos.~size>0){
+							  for(email in infos["weekday"]){
+							    %>
+							     <a class="his_item"  data-id="${email.id}">${email.fromAccountName}@ ${email.toAccountName}<br> ${email.createTimeString}</a>
+							    <%
+							  }
+							  }
+							 %>
+						</div>
+					</div>
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">一周前</h2>
+						<div id="week_before" class="layui-colla-content" data-id="8"
+							style="border: none;height:100%">
+							  <% if(isNotEmpty(infos) && infos.~size>0){
+							  for(email in infos["weekbefore"]){
+							    %>
+							   <a  class="his_item"  data-id="${email.id}">${email.fromAccountName}@ ${email.toAccountName}<br> ${email.createTimeString}</a>
+							    <%}}
+							if (isend==false) { %>
+							<div style="text-align: center;">
+							 <a onclick="moreEmail()" class="nextpage">... 更早 ...</a>
+							</div>
+							<% } %>
+						</div>
+					</div>  
+				</div>
+               </div>
+	  </div>
+  </div>
+ </div>
+ <div id="content" style="display: flex;justify-content:center;flex-direction:column">
+	  <div class="head_title">
+	    <span id="box_title" class="box"></span>
+	    <div id="btn_win"  class="box">
+	    <a id="maxwin" href="#"  class="maxwin" onclick="maxwin()"></a>
+	    <a href="javascript:;" class="closewin"  onclick="closewin()"></a>
+	    </div>
+	  </div>
+    <div id="msg" class="msg">
+	  <ul id="main_body">
+	   <li>
+	  <div style="width: 100%;text-align: center;padding:10px 0">
+	    <% if(isNotEmpty(emails)){%>
+	    <span id="new_email" class="n_email">新的来信</span>
+	    <% } else {%>
+	     <span id="new_email" class="n_email">没有新的来信</span>
+	    <%}%>
+	  </div>
+	  </li>
+	  <% for(email in emails) {%>
+	  <li>
+	   <div class="left">
+		   <a class="leftuser"><img src="${headUrl}${fromUser.id}.jpg"></a>
+		   <div class="item">
+		   <div class="pager">
+		    <span class="email">${email.createTimeString} </span>
+		    ${email.message}
+		   </div>
+		   </div>
+	   </div>
+	  </li>
+	  <%}%>
+	  </ul>
+    </div>
+   <div class="info">
+    	<textarea id="msg_content" maxlength="500"></textarea>
+   </div>
+   <div class="btn">
+        <input type="hidden" value="" id="fanUser">
+        <div>
+	    <a onclick="histoyEmail(1)" class="history">所有的信件</a>
+	    </div>
+	    <div style="margin-right: 10px">
+	    <a  onclick="closewin()" class="close">关闭</a>
+	    <a onclick="sendEmail()" class="send">发 送</a>
+	   </div>
+   </div>
+ </div>
+ </body>
+ <script>
+ var getImageMenuData =function(){
+	 var ids=new Array();
+     <% if(isNotEmpty(groups)){ for( group in groups){ %> 
+     var b={
+		     text:'${group.name}', // $(this).text(),
+		     id: '${group.id}', //$(this).data("id"),
+		     func: function(id) {
+		    	 var a=$(this);
+		         var uid=a.data("id");
+		         var movetogroupid=id;
+		       
+		         $.ajax({
+				     url : "${sitePath}movetogroup/"+uid+"/"+movetogroupid,
+				     dataType :"json",
+				     async:true,
+				     data:{},
+				     method : "post",
+				     beforeSend:function(XMLHttpRequest){
+			        },
+				     success : function(data) {
+				    	 if(data.isPass=="ok"){
+				    			 window.location.href=window.location.href;
+				    	 }else{
+				    		 layer.msg(data.warn)
+				    	 }
+				     },error:function(XMLHttpRequest, textStatus, errorThrown){
+			 	    	 if(XMLHttpRequest.status==500){
+			 	    		 layer.msg(XMLHttpRequest.responseText);
+			 	    	 }
+			 	     }
+			  }); 
+		     }
+        };
+        ids.push(b)
+	 <% }} %>
+	 var idss=new Array();
+	 if(ids.length>0){
+	   idss.push(ids);
+	  };
+	 var imageMenuData = [
+	                      [{
+	                          text: "移动到群组...",
+	                          data: idss
+	                      }, {
+	                          text: "取消关注",
+	                          id:3,
+	                          func: function() {
+	                              $(this).css("padding", "10px");
+	                          }
+	                      }],
+	                      [{
+	                          text: "查看主站",
+	                          id:4,
+	                          func: function() {
+	                        	  window.open("${sitePath}u/"+$(this).data("name"));
+	                          }
+	                      }]
+	                  ];
+	 return imageMenuData;
+ }
+var getAttenImageMenuData=function(){
+	 var ids=new Array();
+     <% if(isNotEmpty(attengroups)){ for( group in attengroups){ %> 
+     var b={
+		     text:'${group.name}', 
+		     id: '${group.id}', 
+		     func: function(id) {
+		    	 var a=$(this);
+		         var uid=a.data("id");
+		         var movetogroupid=id;
+		       
+		         $.ajax({
+				     url : "${sitePath}movetoattengroup/"+uid+"/"+movetogroupid,
+				     dataType :"json",
+				     async:true,
+				     data:{},
+				     method : "post",
+				     beforeSend:function(XMLHttpRequest){
+			        },
+				     success : function(data) {
+				    	 if(data.isPass=="ok"){
+				    			 window.location.href=window.location.href;
+				    	 }else{
+				    		 layer.msg(data.warn);
+				    	 }
+				     },error:function(XMLHttpRequest, textStatus, errorThrown){
+			 	    	 if(XMLHttpRequest.status==500){
+			 	    		 layer.msg(XMLHttpRequest.responseText);
+			 	    	 }
+			 	     }
+			  }); 
+		     }
+        };
+        ids.push(b)
+	 <% }} %>
+	 var idss=new Array();
+	 if(ids.length>0){
+	   idss.push(ids);
+	  };
+	 var imageMenuData = [
+	                      [{
+	                          text: "移动到群组...",
+	                          data: idss
+	                      }, {
+	                          text: "取消关注",
+	                          id:3,
+	                          func: function() {
+	                              $(this).css("padding", "10px");
+	                          }
+	                      }],
+	                      [{
+	                          text: "查看主站",
+	                          id:4,
+	                          func: function() {
+	                        	  window.open("${sitePath}u/"+$(this).data("name"));
+	                          }
+	                      }]
+	                  ];
+	 return imageMenuData;
+ }
+ </script>
+ </html>

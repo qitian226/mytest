@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<% include("/common/include.html"){} %>
+<link href="${sitePath}styles/main.css" rel="stylesheet" type="text/css">
+<link href="${sitePath}styles/userstyle.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/site/user/attention.js"></script>
+
+<title>${user.nickname}的最美-关注</title>
+<style type="text/css">
+#photos .p_li:nth-child(3n) {
+    position: relative;
+    margin-right: 8px;
+}
+</style>
+</head>
+
+<body>
+<%
+include("/common/header.html"){}
+%>
+<div class="top_panel">
+<%
+include("common/top.html"){}
+%>
+</div>
+<div id="main">
+<div id="photos" style="margin-top: 10px">
+<% if(isEmpty(attentions)){%>
+  <span class="attention_null">还没有关注的人哦</span>
+ <%}else{%>
+<% for(atten in attentions){
+ var user=atten[0];
+ var topics=atten[1];
+ var isAttention=atten[2];
+%>
+ <div class="item" style="width: 100%;">
+ <ul class="pic">
+   <li class="p_li">
+   <div class="a_panel">
+    <div style="text-align:center;padding:10px 5px 5px 5px">
+    <a class="a_img" href="${sitePath}u/${user.accountName}" 
+    style="background:url(${headUrl}${user.id}.jpg) no-repeat scroll center center;"></a>
+    </div>
+    <div class="a_name">
+     <span>${user.nickname}</span> 
+    </div>
+     <div class="a_city">
+        <% if(isNotEmpty(user.proviceName) && isNotEmpty(user.cityName)) { %> 
+       <span>${user.proviceName} ${user.cityName}</span>
+       <% } %>
+     </div>
+    <div class="a_topic">
+     <span>${user.topicCount!0} 主题</span> <span>${user.entryCount!0} 图片</span>
+    </div>
+    <div class="a_desc">
+      <p>${user.desc}</p>
+    </div>
+    <div id="u_attention">
+      <% if(isAttention==0) {%>
+       <a  data-id="${user.id}"  href="javascript:;"  onclick="attention(this);" class="attention_btn attention_s">关注</a>
+      <%}
+       if(isAttention==1){%>
+       <a  data-id="${user.id}"  href="javascript:;"  onclick="cancelAttention(this);" class="attention_btn attention_btn attention_s">已关注</a>
+      <%}%>
+     </div>
+   </div>
+   </li>
+  <% if(isNotEmpty(topics)){ for(var topic in topics){%>
+   <li class="p_li">
+     <div class="p_img">
+      <span class="latest"></span>
+      <a href="${sitePath}topic/${topic.classify}/${topic.id}.html" target="_blank" >
+	       <div class="jqthumb">
+			<div class="img" style="background-image: url(${imgUrl}${topic.id}.jpg?t=${topic.currVersion});"></div>
+		   </div>
+       </a>
+        <a class="entry_num">${topic.entryNum!0} 张</a>
+        <a class="grade">${topic.gradeString}</a> 
+        <a onclick="collectTopic(this)" class="collect"  data-id="${topic.id}">收藏</a>
+        <div class="desc"><div class="word">${topic.desc}</div></div>
+         <div class="p_tag">
+		 <div class="title">${topic.title}</div> 
+		 <div class="tags">
+			 <span class="star">${topic.collectString}</span>
+			 <span class="transpond">${topic.shareString}</span> 
+			  <span>${topic.createTimeString}</span>
+		 </div>
+		</div>
+       </div>
+     </li>
+  <% } } %>
+ </ul>
+ </div>
+ <% }} %>
+ </div>
+</div>
+<%
+include("/common/footer.html"){}
+%>
+</body>
+<script type="text/javascript">
+var userid="${user.id}";
+var range = 5;
+var maxnum = Math.ceil(${total}/range);
+var loadHoverFun=function(){
+	//鼠标进
+    $(".p_img").hover(function(){
+      $(this).find(".entry_num").animate({opacity:1},200);
+   	  $(this).find(".grade").animate({opacity:1},200);
+      $(this).find(".desc").animate({opacity:1},200);
+      <% if(isowner=="is") {%>
+      <%}else{%>
+      $(this).find(".collect").animate({opacity:1},200);
+      <%}%>
+    },function(){
+      $(this).find(".entry_num").animate({opacity:0},200);
+      $(this).find(".grade").animate({opacity:0},200);
+      $(this).find(".desc").animate({opacity:0},200);
+      <% if(isowner=="is") {%>
+      <%}else{%>
+      $(this).find(".collect").animate({opacity:0},200);
+      <%}%>
+    }); 
+	//鼠标进
+    $(".p_img").hover(function(){
+      $(this).find(".desc").animate({opacity:1},200);
+    },function(){
+      $(this).find(".desc").animate({opacity:0},200);
+    });
+   $(".attention_btn").hover(function(){
+    	  if($(this).text()=="已关注"){
+    		  $(this).text("取消关注");
+    		  $(this).attr("onclick","cancelAttention(this);")
+    	  }
+	    },function(){
+	    	 if($(this).text()=="取消关注"){
+	    		  $(this).text("已关注");
+	    		  $(this).attr("onclick","attention(this);")
+	    	  } 
+	    });
+}
+</script>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/jquery.md5.js"></script>
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/site/common.js"></script>
+<script type="text/javascript" src="${sitePath}js/layui/layui.js"></script>
+<script src="${sitePath}js/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="${sitePath}js/site/edit/topic_create.js"></script>
+<link href="${sitePath}styles/main.css" rel="stylesheet" type="text/css">
+<link href="${sitePath}js/layui/css/layui.css" rel="stylesheet" type="text/css">
+<link href="${sitePath}styles/edit.css" rel="stylesheet" type="text/css">
+<title>最美 - <% if(isNotEmpty(topic.title)){%>
+   ${topic.title} <%}else{%>主题创建
+   <%}%>
+</title>
+</head>
+<body>
+<%
+include("/common/header.html"){}
+%>
+
+<div id="topic" class="t_content">
+<div class="layui-form">
+  <div class="layui-form-item">
+    <label class="layui-form-label">标题<span>*</span></label>
+    <div class="layui-input-block">
+      <input id="topic-name" style="width: 852px"  type="text"  lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">描述</label>
+    <div class="layui-input-block">
+    <textarea type="text/plain" id="topic-desc"></textarea>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">分类<span>*</span></label>
+    <div id="topic_type" class="layui-input-block">
+      <% for(var item in topictypes) { %>
+         <a  data-id="${item.dictitemName}" class="type">${item.dictitemValue}</a>
+		 <% } %>
+    </div>
+  </div>
+ 
+  <div class="layui-form-item">
+    <label class="layui-form-label">标签<span>*</span></label>
+    <div id="topic_tags" class="layui-input-block">
+    </div>
+  </div>
+   <div class="layui-form-item">
+    <label class="layui-form-label">显示模式<span>*</span></label>
+    <div id="topic_type" class="layui-input-block">
+       <input type="radio"  lay-filter="showmodel" name="model" value="article" title="图文" checked>
+       <input type="radio"  lay-filter="showmodel" name="model"  value="photo" title="相册">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">创建<span>*</span></label>
+    <div class="layui-input-block">
+     <button id="create_btn" class="layui-btn layui-btn-normal"  onclick="saveTopic()">创建主题</button>
+     <button id="next_btn" class="layui-btn layui-btn-warm"  onclick="nextTopic()">下一个主题</button>
+      <lable id="msg" style="padding: 5px 20px;color:#CD0000"></lable>
+    </div>
+  </div>
+  <div class="layui-form-item">
+      <label class="layui-form-label">图文</label>
+    <div class="layui-input-block">
+     <div id="pic-panel" class="superbox">
+       <div id="topic-cover" class="cover">
+        <a id="topic-cover-btn" class="topic_cover_add"  onclick="editTopic()">
+         <span id="topic-cover-title" class="edit_cover">创建封面</span>
+       </a>
+       </div>
+       <div id="entry-panel" class="cover b">
+        <a class="topic_cover_add" onclick="addEntry()">
+         <span>创建图文</span>
+       </a>
+       </div>
+    </div>
+    <div id="mask-panel"></div>
+    </div>
+  </div>
+     <div class="layui-form-item">
+      <label class="layui-form-label">公开</label>
+      <div class="layui-input-block" style="display: flex;align-items:center">
+	     <input  id="isPublic" disabled type="checkbox"  lay-filter="public"  lay-skin="switch"  lay-text="ON|OFF">
+      </div>
+    </div>
+     <div class="layui-form-item">
+      <label class="layui-form-label">置顶</label>
+      <div class="layui-input-block" style="display: flex;align-items:center">
+	     <input id="isTop"  type="checkbox"  disabled lay-skin="switch" lay-filter="istop" lay-text="ON|OFF">
+      </div>
+    </div>
+     <div class="layui-form-item">
+      <label class="layui-form-label">轮播</label>
+      <div class="layui-input-block" style="display: flex;align-items:center">
+	     <input id="isCarousel"  type="checkbox"  disabled lay-skin="switch" lay-filter="carusel" lay-text="ON|OFF">
+      </div>
+    </div>
+  </div>
+ </div>
+<input type="hidden" id="topic-id" value="${topicid}">
+<%
+include("/common/footer.html"){}
+%>
+</body>
+</html>

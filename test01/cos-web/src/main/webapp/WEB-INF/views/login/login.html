@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <link href="${sitePath}js/layer-v3.0.3/layer/skin/default/layer.css" rel="stylesheet" type="text/css">
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/jquery-3.1.1.min.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/site/regular.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/site/common.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/site/login/login.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}/js/layer-v3.0.3/layer/layer.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/crypto/crypto-js.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/crypto/encrypt.js"></script>
+<style>
+ body{
+    box-sizing: border-box;
+    font-family: "微软雅黑",Arial,sans-serif;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    color: #555;
+ }
+ #content{
+   margin:0 aoto;width: 100%;overflow: hidden;text-align: center;padding-top:10px;
+ }
+  .input-group {
+    border-collapse: separate;
+    display: table;
+    position: relative;
+  }
+ 
+ .input-lg{
+    font-size: 14px;
+    }
+.has-feedback {
+    position: relative;
+}
+.form-group {
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+.input-group-addon:first-child {
+    border-right: 0 none;
+}
+.input-group-addon {
+    background-color: #eee;
+    font-size: 14px;
+    padding: 6px 12px;
+    text-align: center;
+    background-color: #dff0d8;
+    border:solid 1px #3c763d;
+    color: #3c763d;
+    vertical-align: middle;
+    white-space: nowrap;
+    display:table-cell;
+    width: 40px;
+}
+
+.login-input {
+    border: 1px solid #3c763d;
+    color: #555;
+    height:30px;
+    font-size: 14px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    width: 200px;
+    display:table-cell;
+}
+
+.login-input::-moz-placeholder {
+    color: #999;
+    opacity: 1;
+}
+ 
+.btn-success {
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    color: #fff;
+}
+
+.btn {
+    -moz-user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    padding: 8px 12px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+} 
+.btn:HOVER{
+background-color: #3c763d;
+}
+.pass_l{
+  display: inline-block;
+  width:25px;
+  height:25px;
+  background: url(${sitePath}images/register/password.svg) no-repeat 2px center;
+}
+.mobile_l{
+  display: inline-block;
+  width:25px;
+  height:25px;
+  background: url(${sitePath}images/register/mobile.svg) no-repeat 2px center;
+}
+.other-login{
+padding: 10px 0;
+overflow: hidden;
+display: flex;
+lign-items: center;
+}
+.other-login a{
+height:26px;width:26px;
+overflow: hidden;
+display: inline-block;
+}
+.other-login span{
+height:26px;
+line-height:26px;
+overflow: hidden;
+display: inline-block;
+margin-right: 50px;
+}
+#reg a{
+color:	#FFA500 !important;
+}
+#reg a:HOVER{
+color:	#B8860B !important;
+}
+.l_title{
+text-align: center;padding: 10px;overflow: hidden;
+}
+.l_label{
+color:#666;font-size: 22px;font-weight: 600
+}
+#loginDiv{
+display:inline-block ;margin: 10px auto
+}
+#regimg{
+width:150px;height:50px;float: right;cursor: pointer;
+}
+#rc {
+width: 100px;padding-right:5px;float:left;
+}
+#reg{
+margin-top: 30px;text-align:justify;
+}
+#reg span{
+margin-left: 30px
+}
+#reg a {
+text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+<div id ="content">
+ <div id="l_title">
+    <span class="l_label">登 录</span>
+ </div>
+ <div id="loginDiv">
+	  <div class="form-group has-success has-feedback">
+	       <div class="input-group" style="width: 100%">
+	        <span class="input-group-addon"><i class="mobile_l"></i></span>
+	        <input type="text" class="login-input input-lg" id="mobile" name="mobile" placeholder="手机号" maxlength="11">
+	      </div>
+	  </div>
+   <div class="form-group has-success has-feedback">
+       <div class="input-group" style="width: 100%">
+        <span class="input-group-addon" ><i class="pass_l"></i></span>
+        <input type="password" class="login-input input-lg" id="ms" name="ms" placeholder="请输入密码" maxlength="16">
+      </div>
+  </div>
+  <div class="form-group has-success has-feedback">
+    <input id="rc" maxlength="4"  name="rc" type="text" class="login-input input-lg" placeholder="验证码">
+    <img id="regimg" src="${sitePath}securitycode" onclick="toimg()">
+  </div>
+  <button type="button" style="width: 100%;" onclick="ulogin()" class="btn btn-success btn-lg">登  录</button>
+  <div id="reg">
+   <a  href="#">忘记密码>></a>
+   <span>还没有账户<a href="${sitePath}register">现在注册>></a></span>
+  </div>
+   <div class="other-login">
+    <span>第三方登录</span>
+    <a data-to="weixin" title="微信" href="#" style="background:url(${sitePath}images/register/weixin.svg) no-repeat center center"></a>
+    <a data-to="weibo" title="微博" href="#" style="background:url(${sitePath}images/register/weibo.svg) no-repeat center center"></a>
+    <a data-to="qq" title="QQ" href="#" style="background:url(${sitePath}images/register/qq.svg) no-repeat center center"></a>
+   </div>
+ </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<div id="header" class="u_head">
+<ul style="float:left;">
+  <li style="padding:0 10px 0 30px;">
+  <a class="logo" href="${sitePath}index.html"></a>
+  </li>
+  <li style="margin-left:10px"></li>
+ <% for(var item in topictypes) { %>
+ <li style="font-weight:600;"><a href="${sitePath}topic/${item.dictitemName}/index.html" target="_blank">${item.dictitemValue}</a>
+ </li>
+ <% } %>
+ </ul>
+ <ul id="llogin" style="float:right;margin-right:10px;">
+</ul>
+</div>

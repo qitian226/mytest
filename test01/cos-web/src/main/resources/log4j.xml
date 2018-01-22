@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7t] %6p - %30.30c(%4L) - %m \n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="${ys-base.console.log.level}"/>
+        </filter>
+    </appender>
+
+    <appender name="FILE-DEBUG" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="Append" value="true"/>
+        <param name="file" value="${ys-base.log.path}/ys-base-debug.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="${ys-base.console.log.level}"/>
+        </filter>
+    </appender>
+
+    <appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="Append" value="true"/>
+        <param name="file" value="${ys-base.log.path}/ys-base.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="${ys-base.console.log.level}"/>
+        </filter>
+    </appender>
+
+    <appender name="FILE-AOP" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="file" value="${ys-base.log.path}/ys-base-aop.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+
+    <appender name="FILE-SQL" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7t] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+
+    <appender name="FILE-VELOCITY" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="file" value="${ys-base.log.path}/ys-base-velocity.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR"/>
+        </filter>
+    </appender>
+
+    <appender name="FILE_TIMETASK" class="org.apache.log4j.RollingFileAppender">
+        <param name="MaxFileSize" value="1MB"/>
+        <param name="maxBackupIndex" value="2"/>
+        <param name="file" value="${ys-base.log.path}/ys-base-timetask.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %6p - %30.30c %m \n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="INFO"/>
+            <param name="LevelMax" value="ERROR"/>
+        </filter>
+    </appender>
+    <appender name="MONITOR_ORDER_NUM" class="org.apache.log4j.RollingFileAppender">
+        <param name="MaxFileSize" value="1MB"/>
+        <param name="maxBackupIndex" value="2"/>
+        <param name="file" value="${ys-base.log.path}/ys-base-monitor.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %6p - %30.30c %m \n"/>
+        </layout>
+    </appender>
+    <category name="java.sql" additivity="true">
+        <appender-ref ref="FILE-SQL"/>
+        <appender-ref ref="CONSOLE"/>
+    </category>
+    <category name="com.opensymphony.xwork2" additivity="false">
+        <priority value="ERROR"/>
+        <appender-ref ref="FILE-DEBUG"/>
+    </category>
+    <category name="org.apache.cxf.interceptor" additivity="false">
+        <priority value="ERROR"/>
+        <appender-ref ref="FILE-DEBUG"/>
+    </category>
+    <root>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE-DEBUG"/>
+    </root>
+</log4j:configuration>

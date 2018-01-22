@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>404</title>
+<style type="text/css">
+html,body{margin:0px; height:100%; }
+.index{
+display: inline-block;position: absolute;bottom: 10px;right: 200px;cursor: pointer;
+background-color: #f17c67;padding:8px 15px;border-radius:5px 
+}
+.error{
+display: inline-block;position: absolute;bottom: 10px;right: 10px;cursor: pointer;
+background-color: #376956;padding:8px 15px;border-radius:5px;color: #fff
+}
+</style>
+
+</head>
+<body style="display: flex;justify-content:center;align-items:center">
+  <div style="display: inline-block;position: relative;">
+  <img id="404img">
+  <a onclick="goindex()" class="index">回到首页</a>
+  <a onclick="senderror()" class="error">发送错误给管理员</a>
+  </div>
+</body>
+<script type="text/javascript">
+var curWwwPath = window.document.location.href;
+var pathName = window.document.location.pathname;
+var pos = curWwwPath.indexOf(pathName);
+var localhostPath = curWwwPath.substring(0, pos) + "/";
+var img=document.getElementById("404img");
+img.src=localhostPath+"images/background/404.jpg";
+var goindex=function(){
+	window.document.location.href=localhostPath;
+}
+var senderror=function(){
+	window.document.location.href=localhostPath+"send/errorinfo?url="+encodeURIComponent(curWwwPath);
+}
+</script>
+</html>

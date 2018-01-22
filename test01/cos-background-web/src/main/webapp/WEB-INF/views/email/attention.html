@@ -1,0 +1,9 @@
+ <% for (atten in attens) {%>
+		   <a  data-id="${atten.accountId}" data-name="${atten.accountName}" onclick="selectFan(this)" class="atten-def">
+			<img src="${headUrl}${atten.accountId}.jpg">
+			<div class="u">
+			    <div class="desc name">${atten.name}</div>
+				<div class="desc">${atten.desc!"此人很懒..."}</div>
+			</div>
+		</a>
+<%}%>

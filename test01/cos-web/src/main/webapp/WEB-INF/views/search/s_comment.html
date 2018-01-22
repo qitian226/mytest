@@ -1,0 +1,22 @@
+<% for(var item in result){ %>
+<div class="row">
+	<div style="display: flex">
+		<% if(item.type=="topic"){ %>
+		<a class="item" href="${sitePath}topic/${item.classify}/${item.id}.html" target="_blank"
+			style="background-image: url(${imgUrl}${item.id}_s.jpg?t=${item.currVersion});">
+		</a> <% } %> <% if(item.type=="entry"){ %>
+		<a class="item" href="${sitePath}topic/${item.classify}/${item.topicId}.html?e=${item.id}" target="_blank"
+			style="background-image: url(${imgUrl}${item.id}_s.jpg?t=${item.currVersion});">
+		</a> <% } %>
+		<div class="desc">
+			<div class="title">
+				<% if(item.type=="topic"){ %> <a href="${sitePath}topic/${item.classify}/${item.id}.html" target="_blank">${item.title}</a> <% } %> <%
+				if(item.type=="entry"){ %> <a href="${sitePath}topic/${item.classify}/${item.topicId}.html?e=${item.id}" target="_blank">${item.title}</a> <% } %>
+				<span class="date">${item.createTime}</span>
+			</div>
+			<div class="box">${item.desc}</div>
+		</div>
+	</div>
+</div>
+<% } %>
+</div>

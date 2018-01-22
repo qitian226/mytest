@@ -1,0 +1,4 @@
+<div id="group_content" style="padding: 10px 10px 10px 30px">
+	<% for (group in fansgroup) {%> 
+	<a id="g_${group.id}"  onclick="groupSelect(this)" class="group-item" data-id="${group.id}">${group.name}</a><%}%>
+</div>

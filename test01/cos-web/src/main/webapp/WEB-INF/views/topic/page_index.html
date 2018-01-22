@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<% include("/common/include.html"){} %>
+
+<link href="${sitePath}styles/main.css" rel="stylesheet" type="text/css">
+<link href="${sitePath}styles/topic.css" rel="stylesheet" type="text/css">
+<link href="${sitePath}styles/page.css" rel="stylesheet" type="text/css">
+<title>最美-${topicTypeTitle}</title>
+ <style type="text/css">
+  .t_content {
+    position: relative;
+    padding: 5px 0;
+    margin: 0 auto;
+    margin-top: 60px;
+    width: 100%;
+    height: 300px;
+    background: url(${sitePath}images/background/topic/1.jpg) no-repeat 0 0;
+    color: #666;
+    border: solid 1px #E0E0E0;
+ }
+ </style>
+</head>
+<body>
+<%
+include("/common/header.html"){}
+%>
+<div class="t_content">
+<div class="t_nav">
+<% for(var tag in tags) { %>
+<a href="${sitePath}topic/${topictype}/${tag.dictitemName}/index.html">${tag.dictitemValue}</a>
+<%}%>
+</div>
+</div>
+<div id="main">
+<div class="nav">
+  <span class="title"><label style="color:#d81e06">最热</label> ${topicTypeTitle}</span> <a class="flow"  href="${sitePath}topic/${topictype}/index.html">流式布局</a>
+</div>
+<div id="container" class="content">
+<% for(topics in lists) {%>
+    <ul id="${topicsLP.index}" class="col">
+    <% for(item in topics.list){ %>
+    <li>
+    <div class="p_img">
+    <a class="ts" href="${sitePath}topic/${item.classify}/${item.id}.html" target="_blank">
+	    <img src="${imgUrl}${item.id}.jpg?t=${item.currVersion}" style="height:${item.imgHeight}px">
+	    <a class="entry_num" style="opacity: 0;">${item.entryNum} 页</a>
+    </a>
+     <div class="title">${item.title}</div>
+    <div class="tag">
+	    <div class="c_nav">
+		    <a href="${sitePath}u/${item.accountName}" target="_blank">
+		    <img src="${headUrl}${item.createBy}.jpg">
+		    </a>
+	    </div>
+	    <div class="content">
+		    <div class="tags">
+		     <span class="star" title="评分">${item.gradeString}</span> 
+			 <span class="transpond" title="分享">${item.shareString}</span> 
+			 <span class="collect" title="收 藏">${item.collectString}</span>
+		    </div>
+		    <div class="author">
+		    	<a href="${sitePath}u/${item.accountName}" target="_blank">${item.author}</a>
+		    	<a href="${sitePath}topic/${item.type}/index.html" target="_blank">${item.createTimeString}</a>
+		    </div>
+	    </div>
+    </div>
+    </div>
+    <% } %>
+    </li>
+    </ul>
+ <% } %> 
+</div>
+ 
+  <%
+   if(pageNo>1){
+   %>
+   <div id="nav">
+   <%
+    include("/common/pagination.html"){};
+    %>
+   </div>
+    <%}%>
+</div>
+<%
+include("/common/footer.html"){}
+%>
+</body>
+ <script type="text/javascript">
+ $().ready(function(){
+	 initScreenWidth("main",function(){  
+		 if(window.screen.width>1500){
+		 $("#nav").css("width","1500px"); 
+		 }
+	 });
+	 $("ul li").fadeIn(2500);
+	 $(".col li").on({
+ 	    mouseenter:function(){
+    	      $(this).find(".entry_num").animate({opacity:1},200);
+    	      $(this).find(".grade").animate({opacity:1},200);
+ 	    },
+ 	    mouseleave:function(){
+    	      $(this).find(".entry_num").animate({opacity:0},200);
+    	      $(this).find(".grade").animate({opacity:0},200);
+ 	    }
+ 	});	 
+	 
+ });
+ 
+</script>
+</html>

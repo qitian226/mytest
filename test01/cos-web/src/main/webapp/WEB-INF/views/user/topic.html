@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<% include("/common/include.html"){} %>
+<link href="${sitePath}styles/main.css" rel="stylesheet" type="text/css">
+<link href="${sitePath}styles/userstyle.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${sitePath}js/polaroid/polaroid-gallery.css">
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/polaroid/polaroid-gallery.js"></script>
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/site/user/topic.js"></script>
+<title>${user.nickname}的最美-主题</title>
+</head>
+<body>
+<%
+include("/common/header.html"){}
+%>
+<div class="top_panel">
+<%
+include("common/top.html"){}
+%>
+</div>
+<div id="main">
+ <div id="photos">
+ <div class="t-title">
+ <span>最新主题</span>
+ <a id="list" onclick="showTopicTags(this)">目录</a>
+ </div>
+ <div id="nt" style="margin-top: 5px;">
+ <% if(total==0){ %>
+  <span class="topic_null">需要加快彩集哦</span>
+  <%}%>
+  <ul id="new_t" class="pic">
+  </ul>
+ </div>
+ </div>
+</div> 
+ <%
+include("/common/footer.html"){}
+%>
+</body>
+  <div id="tag_type">
+          <div id="topic_type">
+          <span class="typeicon">分类</span>
+		  <% for(var item in topictypes) { %>
+		  <a  data-id="${item.dictitemName}" class="stype">${item.dictitemValue}</a> 
+		 <% } %>
+		  </div>
+		  <div id="topic_tags">
+          </div>
+ </div>
+ <script type="text/javascript">
+ var loadHoverFun=function(){
+		//鼠标进
+	    $(".p_img").hover(function(){
+	      $(this).find(".desc").animate({opacity:1},200);
+	      <% if(isowner=="is") {%>
+	      $(this).find(".edit_btn").animate({opacity:1},200);
+	      <%}else{%>
+	      $(this).find(".collect").animate({opacity:1},200);
+	      <%}%>
+	    },function(){
+	      $(this).find(".desc").animate({opacity:0},200);
+	      <% if(isowner=="is") {%>
+	      $(this).find(".edit_btn").animate({opacity:0},200);
+	      <%}else{%>
+	      $(this).find(".collect").animate({opacity:0},200);
+	      <%}%>
+	    }); 
+	}
+ var range = 10;
+ var maxnum = Math.ceil(${total}/range);
+ var username="${user.accountName}";
+ </script>
+</html>

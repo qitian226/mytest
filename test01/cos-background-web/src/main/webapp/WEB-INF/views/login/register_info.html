@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style>
+ body{
+    box-sizing: border-box;
+    font-family: "微软雅黑",Arial,sans-serif;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+    color: #555;
+ }
+ 
+.user_l{
+  display: inline-block;
+  width:25px;
+  height:25px;
+  background: url(${sitePath}images/register/user.svg) no-repeat 2px center;
+}
+.nick_l{
+  display: inline-block;
+  width:25px;
+  height:25px;
+  background: url(${sitePath}images/register/nick.svg) no-repeat 2px center;
+}
+.mobile_l{
+  display: inline-block;
+  width:25px;
+  height:25px;
+  background: url(${sitePath}images/register/mobile.svg) no-repeat 2px center;
+}
+  .input-group {
+    border-collapse: separate;
+    display: table;
+    position: relative;
+    padding: 5px;
+    background-color: #eee;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .input-group-item {
+    font-size: 14px;
+    padding: 6px 2px;
+    text-align: left;
+    color: #3c763d;
+    vertical-align: middle;
+    white-space: nowrap;
+    display:table-cell;
+}
+#reg {
+color:	#FFA500 !important;
+letter-spacing:5px;
+}
+#reg:HOVER{
+color:	#B8860B !important;
+}
+.title{
+ width: 30px;
+}
+</style>
+</head>
+<body>
+ 
+<!--content-->
+
+<div style="margin:0 aoto;width: 100%;overflow: hidden;text-align: center;"> 
+ 
+   <div id="regDiv" style="display:inline-block ;margin: 0 auto;margin-top:50px;">
+   <span style="display:block;color:#5cb85c;font-size: 16px;font-weight: 600;padding:5px 0 30px 0">欢迎您,会员注册成功</span> 
+        <div class="input-group">
+        <span class="input-group-item title"><i class="user_l"></i></span>
+        <span class="input-group-item">个人主站: ${sitePath}u/${user.accountName}</span>  
+       </div>
+       <div class="input-group">
+        <span class="input-group-item title"><i class="user_l"></i></span>
+        <span class="input-group-item">用户名称 : ${user.accountName}</span>  
+       </div>
+       <div class="input-group">
+        <span class="input-group-item title"><i class="nick_l"></i></span>
+        <span class="input-group-item">用户昵称 : ${user.nickname}</span>  
+      </div>
+      <div class="input-group">
+        <span class="input-group-item title"><i class="mobile_l"></i></span>
+        <span class="input-group-item">手机号码 : ${user.mobile}</span>  
+      </div>
+   </div>
+   <div style="padding: 5px;text-align: center;">
+   <a id="reg" href="${sitePath}login">继续登录</a>
+   </div>
+ </div>
+
+</body>
+</html>
+			

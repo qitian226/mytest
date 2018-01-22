@@ -1,0 +1,19 @@
+  <div class="content_row">
+			<div class="c_content_right">
+				 <div class="title">
+				     <span style="font-size:16px">${reply.replyTo}</span>
+				     <span style="margin-left: 20px">${reply.dayNumFromCurrentDay}</span>
+				     <span style="margin-left: 20px">
+				     </span>
+			     </div>
+				  <div class="content">
+			      ${reply.content}
+			     </div>
+			</div>
+			<div class="c_nav">
+			 <a data-id="${reply.commentId}" data-user="${reply.createBy}" data-author="${reply.author}"  onclick="focusU(this)">
+			<img  src="${headUrl}${reply.createBy}.jpg">
+			</a>
+			</div>
+		 </div>
+		  

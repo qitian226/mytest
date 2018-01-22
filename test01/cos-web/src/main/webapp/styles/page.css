@@ -1,0 +1,8 @@
+/*分页 begin*/  
+.page_list{display:inline-block;margin: 0}  
+.page_list a{ text-decoration: none;font-size:13px;color:#666; display: inline-block;float: left;width:36px;height:30px;line-height:30px;  
+    margin-right: 10px;text-align: center;background-color: #dedede;}  
+.page_list a.top_page,.page_list a.end_page{width:56px;}  
+.page_list a.page_prev,.page_list a.page_next{width:66px;}  
+.page_list a:hover ,.page_list a.current{background-color: #fff;color:#0e932e;}  
+/*分页 end*/ 

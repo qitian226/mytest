@@ -1,0 +1,9 @@
+<% for (email in emailtitles) {
+%>
+<a data-id="${email.id}"  class="his_item">${email.fromAccountName}@ ${email.toAccountName}<br> ${email.createTimeString}</a>
+<% }
+if (isend==false) { %>
+<div style="text-align: center;">
+	<a  onclick="moreEmail()" class="nextpage">... 更早 ...</a>
+</div>
+<% } %>

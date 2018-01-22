@@ -1,0 +1,342 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<% include("/common/include.html"){} %>
+<link href="${sitePath}styles/main.css" rel="stylesheet" type="text/css">
+<link href="${sitePath}styles/userstyle.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="${sitePath}js/polaroid/polaroid-gallery.css">
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/polaroid/polaroid-gallery.js"></script>
+<title>${user.nickname}的最美-主题</title>
+
+</head>
+<body>
+	<% include("/common/user_header.html"){} %>
+	<div id="toppanel" style="background-image: url('${sitePath}images/background/b-1.jpg');">
+		<div class="u_top">
+			<div class="u_header">
+				<img src="${headUrl}${user.id}.jpg">
+				<div class="sex">
+					<div class="h_star">
+						<% if(isNotEmpty(user.level)){ for(var i=0;i
+						<user.level;i++) {%> <span class="star_s"></span> <% }} %> 
+					</div>
+				</div>
+				<% if(isNotEmpty(user.level) && user.vip>=1){ %> <span class="vip">${user.vip}</span> <% } %>
+			</div>
+			<div class="u_info">
+				<div class="t_info">
+					<% if(user.sex==0){%> <span class="man_name"> ${user.nickname!""}</span> <%} else {%> <span class="woman_name"> ${user.nickname!""}</span> <%}%>
+					<% if(isNotEmpty(attention.isAttention) && attention.isAttention){ %> <a data-id="${user.id}" class="attention_btn">已关注</a> <% if(isowner=="no"){
+					%> <a onclick="showEmail('${user.id}')" class="letter_btn">私信</a><%}%> <% } else{ if(isowner=="no"){ %> <a data-id="${user.id}"
+						onclick="attention(this)" class="attention_btn">关注</a> <a onclick="showEmail('${user.id}')" class="letter_btn">私信</a> <%}}%>
+				</div>
+				<div class="m_info">
+					<% if(isNotEmpty(user.proviceName) && isNotEmpty(user.cityName)) { %> <span class="address">${user.proviceName} ${user.cityName}</span> <% } %> <span
+						class="head-topic">${user.topicCount!0} 主题 ${user.entryCount!0} 单张</span>
+				</div>
+				<div class="d_info">${user.desc}</div>
+			</div>
+		</div>
+		<div id="gallery" class="fullscreen"></div>
+	</div>
+	<div id="main" style="width: 1275px">
+		<div id="photos" style="display: flex;">
+			<div id="left_content">
+				<div class="t-title">
+					<span>置顶 <a class="a_title" target="_blank" href="${sitePath}u/${user.accountName}/topic.html">主题</a></span> <% if(isowner=="is"){ %> <a
+						class="create" target="_blank" href="${sitePath}edit/topic/create">创建新主题</a> <%}%>
+				</div>
+				<% if (isEmpty(topTopics)){ %> <span class="topic_null">需要加快彩集哦</span> <%}%>
+				<div id="top_t">
+					<ul class="pic">
+						<% for(var topic in topTopics){%>
+						<li class="p_li">
+							<div class="p_img">
+								<span class="settop"></span> 
+								<a class="t_container" href="${sitePath}topic/${topic.classify}/${topic.id}.html" target="_blank">
+									<div class="jqthumb">
+										<div class="img" style="background-image: url(${imgUrl}${topic.id}.jpg?t=${topic.currVersion});"></div>
+									</div>
+								</a>
+								<% if(topic.status==2){%> <a class="ready">私</a> <%}%> 
+								<% if(isowner=="no"){ if(topic.isCollect==true) { %> <a class="collect">已收藏</a> <% } else { %> <a onclick="collectTopic(this)"
+									data-id="${topic.id}" class="collect">收藏</a> <% } } if(isowner=="is"){ %> <a class="edit_btn" target="_blank"
+									href="${sitePath}edit/topic/edit/${topic.id}">编辑</a> <% } %>
+								<div class="desc">
+									<div class="word">${topic.desc}</div>
+								</div>
+								<div class="p_tag">
+									<div class="title">${topic.title}</div>
+									<div class="tags">
+										<span class="star" title="评分">${topic.gradeString}</span>
+                                        <span class="transpond" title="分享">${topic.shareString}</span>
+										<a class="type" target="_blank" href="${sitePath}topic/${topic.type}/index.html">${topic.typeName}</a>
+									</div>
+								</div>
+							</div>
+						</li> <% } %>
+					</ul>
+				</div>
+				<div class="t-title">
+					<span class="t">最新 <a class="a_title" target="_blank" href="${sitePath}u/${user.accountName}/topic.html">主题</a></span> <a
+						href="${sitePath}u/${user.accountName}/topic.html" target="_blank" class="more1">更多</a>
+				</div>
+				<div id="nt">
+					<% if(total==0){ %> <span class="topic_null">需要加快彩集哦</span> <%}%>
+					<ul id="new_t" class="pic">
+						<% for(var topic in hotTopics){ %>
+						<li class="p_li">
+							<div class="p_img">
+								<a href="${sitePath}topic/${topic.classify}/${topic.id}.html" title="${topic.title}" target="_blank">
+									<div class="jqthumb">
+										<div class="img" style="background-image: url(${imgUrl}${topic.id}.jpg?t=${topic.currVersion});"></div>
+									</div>
+								</a> <% if(topic.status==2){%> <a class="ready">私</a> <%}%> <% if(isowner=="no"){ if(topic.isCollect==true) { %> <a class="collect">已收藏</a> <% }
+								else { %> <a onclick="collectTopic(this)" data-id="${topic.id}" class="collect">收藏</a> <% } } if(isowner=="is"){ %>
+								<a class="edit_btn" target="_blank" href="${sitePath}edit/topic/edit/${topic.id}">编辑</a> <% } %>
+								<div class="desc">
+									<div class="word">${topic.desc}</div>
+								</div>
+								<div class="p_tag">
+									<div class="title">${topic.title}</div>
+									<div class="tags">
+										<span class="star" title="评分">${topic.collectString}</span> <span class="transpond" title="分享">${topic.shareString}</span>
+										<span class="entrypage" title="单张">${topic.entryNum!0}</span>
+										<a class="type" target="_blank" href="${sitePath}topic/${topic.type}/index.html">${topic.typeName}</a>
+									</div>
+								</div>
+							</div>
+						</li> <% } %>
+					</ul>
+				</div>
+			</div>
+			<div id="right_content">
+				    <% if(isowner=="is") {%>
+				    <div class="t-title">
+				    <span class="t">最新 <a class="a_title" target="_blank" href="${sitePath}u/${user.accountName}/attention.html">关注</a></span>
+				    <a href="${sitePath}u/${user.accountName}/attention.html" target="_blank" class="more1">更多</a>
+				   </div>
+				   <div id="dynamic">
+					<% if(isEmpty(dynamic_topics)){%><span class="dynamic_null">太懒还没有留下足迹</span><%}
+					else { var prev_t=""; for(topic in dynamic_topics){ %>
+					<div class="item">
+						<% if(topic.createTimeString!=prev_t){%>
+						<div class="date">${topic.createTimeString}</div>
+						<%} prev_t=topic.createTimeString; %>
+						<div class="c_panel">
+							<div class="topic">
+								[主题]<a href="${sitePath}topic/${topic.classify}/${topic.id}.html" target="_blank"> ${topic.title}</a>
+							</div>
+							<% if(isNotEmpty(topic.desc)){%><div class="desc">${topic.desc}​​​​</div><%}%>
+							<div class="entry">
+								<% for(entry in topic.entrys) {%> <a href="${sitePath}topic/${topic.classify}/${topic.id}.html?e=${entry.id}" target="_blank">
+									<div class="img" style="background-image: url(${imgUrl}${entry.id}.jpg?t=${entry.currVersion});"></div>
+								</a> <%}%>
+							</div>
+							<div class="other">
+								<span><h3><a target="_blank" href="${sitePath}u/${topic.accountName}">${topic.author}</a></h3> 共彩集 ${topic.entryNum} 张单片 于 ${topic.createTime,dateFormat="HH点mm分ss秒"}</span> <span class="star" title="评分">${topic.gradeString}</span>
+                                <span class="transpond" title="分享">${topic.shareString}</span>
+							</div>
+						</div>
+					</div>
+					<%}%>
+				</div>
+				<%}%>
+				    <%} else { %>
+				    <div class="t-title">
+				    <span class="t">最新 <a class="a_title" target="_blank" href="${sitePath}u/${user.accountName}/dynamic.html">动态</a></span> <a
+						href="${sitePath}u/${user.accountName}/dynamic.html" target="_blank" class="more1">更多</a>
+				   </div>
+				   <div id="dynamic">
+					<% if(isEmpty(dynamic_topics)){%> <span class="dynamic_null">太懒还没有留下足迹</span> <%}else{ var prev_t=""; for(topic in dynamic_topics){ %>
+					<div class="item">
+						<% if(topic.createTimeString!=prev_t){%>
+						<div class="date">${topic.createTimeString}</div>
+						<%} prev_t=topic.createTimeString; %>
+						<div class="c_panel">
+							<div class="topic">
+								[主题]<a href="${sitePath}topic/${topic.classify}/${topic.id}.html" target="_blank"> ${topic.title}</a>
+							</div>
+							<% if(isNotEmpty(topic.desc)){%><div class="desc">${topic.desc}​​​​</div><%}%>
+							<div class="entry">
+								<% for(entry in topic.entrys) {%> <a href="${sitePath}topic/${topic.classify}/${topic.id}.html?e=${entry.id}" target="_blank">
+									<div class="img" style="background-image: url(${imgUrl}${entry.id}.jpg?t=${entry.currVersion});"></div>
+								</a> <%}%>
+							</div>
+							<div class="other">
+								<span> 共彩集 ${topic.entryNum} 张单片 于 ${topic.createTime,dateFormat="HH点mm分ss秒"}</span> <span class="star" title="评分">${topic.gradeString}</span>
+                                 <span class="transpond" title="分享">${topic.shareString}</span>
+							</div>
+						</div>
+					</div>
+					<%}%>
+				</div>
+				<%}%>
+				<div id="attention" class="r_panel">
+					<div>
+						<span class="title"><% if(isowner=="is") {%>我<%} else {%> ${user.nickname}<%}%>的<a target="_blank" class="a_btn" href="${sitePath}u/${user.accountName}/attention.html">关注</a></span>
+						<a href="${sitePath}u/${user.accountName}/attention.html" target="_blank" class="more">更多</a>
+					</div>
+					<div class="content">
+						<% if(isEmpty(attentions)){%> <span class="attention_null">还没有关注的人哦</span> <%}else{ for(atten in attentions){ 
+						var user=atten[0]; var isAttention=atten[2]; %>
+						<div class="u_panel">
+							<div class="top">
+								<a style="background-image: url(${headUrl}${user.id}.jpg)"></a>
+							</div>
+							<div class="name">
+								<span>${user.nickname}</span>
+							</div>
+							<div class="name" style="color: #808080">
+								<span>${user.proviceName} ${user.cityName}</span>
+							</div>
+							<div class="name" style="color: #808080">
+								<span>${user.topicCount} 主题</span> <span>${user.entryCount} 单片</span>
+							</div>
+							<div class="u_desc">${user.desc}</div>
+							<div id="u_attention">
+								<% if(isAttention==0) {%> <a class="attention_s" data-id="${user.id}" onclick="attention(this);">关注</a> <%}
+								else{%> <a data-id="${user.id}" class="attention_s">已关注</a> <%}%>
+							</div>
+						</div>
+						<% } }%>
+					</div>
+				</div>
+				    <% } %>
+				<div id="fans" class="r_panel">
+					<div>
+						<span class="title"><% if(isowner=="is") {%>我<%} else {%> ${user.nickname}<%}%>的<a target="_blank" class="a_btn" href="${sitePath}u/${user.accountName}/fans.html">粉丝</a></span>
+						<a href="${sitePath}u/${user.accountName}/fans.html" target="_blank" class="more">更多</a>
+					</div>
+					<div class="content">
+						<% if(isEmpty(fans)){%> <span class="attention_null">需要努力圈粉哦</span> <%}else{ for(fan in fans){ var user=fan[0]; var isAttention=fan[1]; %>
+						<div class="u_panel">
+							<div class="top">
+								<a style="background-image: url(${headUrl}${user.id}.jpg);"></a>
+							</div>
+							<div class="name">
+								<span>${user.nickname}</span>
+							</div>
+							<div class="name" style="color: #808080">
+								<span>${user.proviceName} ${user.cityName}</span>
+							</div>
+							<div class="name" style="color: #808080">
+								<span>${user.topicCount} 主题</span> <span>${user.entryCount} 单片</span>
+							</div>
+							<div class="u_desc">${user.desc}</div>
+							<div id="u_attention">
+								<% if(isAttention==0) {%> <a class="attention_s" data-id="${user.id}" onclick="attention(this);">关注</a> <%}%>
+								<%if(isAttention==1){%> <a data-id="${user.id}" class="attention_s">已关注</a> <%}%>
+							</div>
+						</div>
+						<% }}%>
+					</div>
+				</div>
+				<div id="collect" class="r_panel">
+					<div>
+						<span class="title"> <% if(isowner=="is") {%>我<%} else {%> ${user.nickname}<%}%>的<a target="_blank" class="a_btn" href="${sitePath}u/${user.accountName}/collect.html">收藏</a></span>
+                    <a href="${sitePath}u/${user.accountName}/collect.html" target="_blank" class="more">更多</a>
+					</div>
+					<% if(isEmpty(c_topics) || c_topics.~size==0){ %>
+					<div>
+						<span class="collect_null">还没有新的收藏哦</span>
+					</div>
+					<% } else { %>
+					<ul class="content">
+						<% for(var topic in c_topics){%>
+						<li class="p_li" style="flex-shrink: 0;">
+							<div class="p_img">
+								<a href="${sitePath}topic/${topic.classify}/${topic.id}.html" target="_blank" style="display: inline-block;">
+									<div class="jqthumb">
+										<div class="b_img" style="background-image: url(${imgUrl}${topic.id}.jpg?t=${topic.currVersion});"></div>
+									</div>
+								</a> <span class="c_title">【主题】 ${topic.title}</span> <span class="c_other">彩于 ${topic.createTime,"yyyy年MM月dd日 HH点mm分"}</span>
+							</div>
+						</li> <% } %>
+					</ul>
+					<% } %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% include("/common/footer.html"){} %>
+</body>
+<script type="text/javascript">
+	var loadHoverFun = function() {
+		//鼠标进
+		$(".p_img").hover(function() {
+			$(this).find(".desc").animate({
+				opacity : 1
+			}, 200);
+			<% if(isowner=="is") {%>
+			$(this).find(".edit_btn").animate({
+				opacity : 1
+			}, 200);
+			<%}else{%>
+			$(this).find(".collect").animate({
+				opacity : 1
+			}, 200);
+			<%}%>
+		}, function() {
+			$(this).find(".desc").animate({
+				opacity : 0
+			}, 200);
+			<% if(isowner=="is") {%>
+			$(this).find(".edit_btn").animate({
+				opacity : 0
+			}, 200);
+			<%}else{%>
+			$(this).find(".collect").animate({
+				opacity : 0
+			}, 200);
+			<%}%>
+		});
+	}
+	$().ready(function() {
+						loadHoverFun();
+						new polaroidGallery(
+								"${sitePath}u/topic/carousel?uname=${user.accountName}");
+						if (window.screen.width > 1500) {
+							$("#main").css("width", "1500px");
+						}
+						if (window.screen.width < 1500) {
+							$("#main").css("width", "1275px");
+						}
+						$(window).on("scroll", function() {
+							if ($(window).scrollTop() > 300) {
+								$("#header").removeClass("u_head");
+								$("#header").addClass("head");
+								$("#search").css("display", "inline-block");
+							}
+							if ($(window).scrollTop() < 300) {
+								$("#header").removeClass("head");
+								$("#header").addClass("u_head");
+								$("#search").css("display", "none");
+							}
+						});
+						   $(".attention_s").hover(function(){
+						    	  if($(this).text()=="已关注"){
+						    		  $(this).text("取消关注");
+						    		  $(this).attr("onclick","cancelAttention(this);")
+						    	  }
+							    },function(){
+							    	 if($(this).text()=="取消关注"){
+							    		  $(this).text("已关注");
+							    		  $(this).attr("onclick","attention(this);")
+							    	  } 
+							    });
+						   $(".attention_btn").hover(function(){
+						    	  if($(this).text()=="已关注"){
+						    		  $(this).text("取消关注");
+						    		  $(this).attr("onclick","cancelAttention(this);")
+						    	  }
+							    },function(){
+							    	 if($(this).text()=="取消关注"){
+							    		  $(this).text("已关注");
+							    		  $(this).attr("onclick","attention(this);")
+							    	  } 
+							    });
+					});
+</script>
+</html>

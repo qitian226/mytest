@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+ <% if(isNotEmpty(fans)){ for(fan in fans){ 
+  var user=fan[0];
+  var isAttention=fan[1];
+%>
+   <li class="p_li">
+   <div class="u_panel">
+    <div class="top">
+	    <a href="${sitePath}u/${user.accountName}" style="background:url(${headUrl}${user.id}.jpg)"></a>
+    </div>
+    <div class="name">
+     <span>${user.nickname}</span> 
+    </div>
+     <div class="name" style="color: #808080">
+        <% if(isNotEmpty(user.proviceName) && isNotEmpty(user.cityName)) { %> 
+       <span>${user.proviceName} ${user.cityName}</span>
+       <% } %>
+     </div>
+    <div class="name" style="color: #808080">
+     <span>${user.topicCount!0} 主题</span> <span>${user.entryCount!0} 图片</span>
+    </div>
+    <div class="u_desc">
+      <p>${user.desc}</p>
+    </div>
+    <div id="u_attention">
+      <% if(isAttention==0) {%>
+       <a  data-id="${user.id}"  href="javascript:;"  onclick="attention(this);" class="attention_btn attention_s">关注</a>
+      <%}
+       if(isAttention==1){%>
+       <a  data-id="${user.id}"  href="javascript:;"  onclick="cancelAttention(this);" class="attention_btn attention_btn attention_s">已关注</a>
+      <%}%>
+     </div>
+   </div>
+   </li>
+ 
+ <% }} %>
+</html>

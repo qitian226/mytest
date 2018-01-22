@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+     <mappers>
+   	   <mapper resource="sqlmap/SysAccountMapper.xml"/>
+       <mapper resource="sqlmap/EntryMapper.xml"/>
+       <mapper resource="sqlmap/TopicMapper.xml"/>
+       <mapper resource="sqlmap/CommentMapper.xml"/>
+       <mapper resource="sqlmap/ReplyMapper.xml"/>
+       <mapper resource="sqlmap/GradeMapper.xml"/>
+       <mapper resource="sqlmap/TopicToTagMapper.xml"/>
+       <mapper resource="sqlmap/BaseDictionaryitemMapper.xml" />
+       <mapper resource="sqlmap/BaseDictionaryMapper.xml" />
+       <mapper resource="sqlmap/CollectFolderMapper.xml" />
+       <mapper resource="sqlmap/SysEmailMapper.xml" />
+       <mapper resource="sqlmap/FansGroupMapper.xml" />
+       <mapper resource="sqlmap/FansMapper.xml" />
+       <mapper resource="sqlmap/FullIndexMapper.xml" />
+       <mapper resource="sqlmap/ImgFileMapper.xml" />
+       <mapper resource="sqlmap/CityCodeMapper.xml" />
+       <mapper resource="sqlmap/ProvinceCodeMapper.xml" />
+    </mappers>
+</configuration>

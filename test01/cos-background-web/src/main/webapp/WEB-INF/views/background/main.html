@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>后台管理</title>
+  <% include("/common/include.html"){} %>
+  <style type="text/css">
+  *{
+   box-sizing: border-box;
+  }
+  .logo {
+	padding: 0 10px 0 10px;
+	display: inline-block;
+	width: 130px;
+	height: 60px;
+	background: rgba(0, 0, 0, 0) url("/images/ico/logo-3.png") no-repeat
+		scroll left center;
+}
+
+.head {
+	background-color: #222;
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	box-shadow: 0 0 2px 0px rgba(128,128,128, 0.6);
+	-webkit-box-shadow: 0 0 2px 0px rgba(128,128,128, 0.6);
+	-moz-box-shadow: 0 0 2px 0px rgba(128,128,128,0.6);
+}
+
+.head ul:FIRST-CHILD {
+	overflow: hidden;
+	font-size: 0;
+	height: 60px;
+	position: relative;
+	top: 0;
+	transition: top 0.1s ease-out 0s, opacity 0.1s ease-out 0s;
+}
+
+.head  ul:FIRST-CHILD li {
+	float: left;
+	height: 60px;
+	line-height: 50px; transition : none 0s ease 0s;
+	list-style: outside none none;
+	transition: none 0s ease 0s;
+}
+.head ul:LAST-CHILD{
+	overflow: hidden;
+	font-size: 0;
+	height: 60px;
+	position: relative;
+	top: 0;
+	transition: top 0.1s ease-out 0s, opacity 0.1s ease-out 0s;
+	line-height: 60px;
+}
+
+.head  ul:LAST-CHILD li {
+	float: right;
+	height: 60px;
+	line-height: 50px; transition : none 0s ease 0s;
+	list-style: outside none none;
+	transition: none 0s ease 0s;
+}
+.head ul li a {
+	display: inline-block;
+	overflow: hidden;
+	font-size: 14px !important;
+	color: #fff !important;
+	text-decoration: none;
+	white-space: nowrap;
+	padding: 5px 10px;
+}
+.head ul li a:HOVER{
+  color: #ddd !important;
+}
+     .layui-header {
+    background-color: #23262e;
+    border-bottom: medium none;
+    height: 60px;
+    position: relative;
+    z-index: 1000;
+    margin: 0;
+    padding: 0;
+}
+.layui-main {
+    margin: 0 15px;
+    width: auto;
+    
+}
+ 
+.component {
+    left: 185px;
+    position: absolute;
+    top: 16px;
+    width: 200px;
+}
+.component .layui-input {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 0 none;
+    color: #fff;
+    font-size: 12px;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 12px;
+}
+.component .layui-form-select .layui-edge {
+    border-top-color: #999;
+    display: none;
+}
+.layui-nav {
+    top: 0;
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+}
+.entry_num {
+    background: rgba(74, 74, 74, 0.6) none repeat scroll 0 0;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 5px 10px;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    z-index: 90;
+}
+.lock {
+ padding:2px 2px 2px 22px; 
+ background: url(${sitePath}images/ico/lock.svg) 1px center no-repeat scroll !important;
+ }
+ .unlock {
+ padding:2px 2px 2px 22px; 
+ background: url(${sitePath}images/ico/unlock.svg) 1px center no-repeat scroll !important;
+ }
+.uquery {
+ padding:2px 2px 2px 20px; 
+ background: url(${sitePath}images/ico/search-s.svg) 1px center no-repeat scroll !important;
+}
+.block {
+ padding:2px 10px 10px 10px; 
+}
+a:HOVER {
+	cursor:pointer;
+}
+  </style>
+</head>
+<body>
+	<% include("/common/header.html"){} %>
+  <div id="mian" style="position: fixed;top:60px;left: 0;bottom: 0;right: 0">
+  <div id="nav" class="layui-bg-black" style="position: absolute;top:0;left:0;bottom: 0;width: 200px">
+  <div class="layui-side-scroll">
+  <ul class="layui-nav layui-nav-tree" lay-filter="demo">
+  <li class="layui-nav-item layui-nav-itemed">
+    <a href="javascript:;">主题管理</a>
+    <dl class="layui-nav-child">
+      <dd><a href="javascript:loadPage('${sitePath}topic/manage.html');">主题</a></dd>
+    </dl>
+  </li>
+  <li class="layui-nav-item">
+    <a href="javascript:;">用户管理</a>
+    <dl class="layui-nav-child">
+      <dd><a href="javascript:loadPage('${sitePath}sys/user.html');">用户</a></dd>
+    </dl>
+  </li>
+   <li class="layui-nav-item">
+    <a href="javascript:;">字典管理</a>
+    <dl class="layui-nav-child">
+      <dd><a href="javascript:loadPage('${sitePath}sys/dictionary.html');">字典</a></dd>
+    </dl>
+  </li>
+   <li class="layui-nav-item">
+    <a href="javascript:;">广告管理</a>
+    <dl class="layui-nav-child">
+      <dd><a href="javascript:loadPage('${sitePath}sys/advertising.html');">首页</a></dd>
+    </dl>
+  </li>
+</ul>
+</div>  
+</div>
+<div id="content" style="position:absolute;top:0;left:200px;right:0;bottom:0;overflow-y:auto;">
+</div>
+  </div>
+</body>
+<div id="img-temp" style="display: none;width: 100%;height:100%">
+  <img id="img"  src="">
+</div>
+
+ <script>
+ var element,layer;
+ layui.use(['element','layer'], function(){
+	   element = layui.element, layer = layui.layer;
+	});
+ function loadPage(url_) {
+		$.ajax({
+			url :url_,
+			dataType : "html",
+			type : "post",
+			success : function(data) {
+			 $("#content").html(data);
+			}
+		});
+	};
+
+</script>
+ 
+
+</html>

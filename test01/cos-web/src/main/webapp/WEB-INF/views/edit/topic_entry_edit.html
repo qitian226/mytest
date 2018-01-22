@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+  <script type="text/javascript" charset="utf-8" src="${sitePath}/js/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" charset="utf-8" src="${sitePath}js/ckeditor/ckeditor.js"></script> 
+  <script type="text/javascript" charset="utf-8" src="${sitePath}/js/layer-v3.0.3/layer/layer.js"></script>
+  <script type="text/javascript" src="${sitePath}js/site/edit/entry_edit.js"></script>
+  <link href="${sitePath}js/cropper/cropper.css" rel="stylesheet">
+  <link href="${sitePath}js/cropper/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="${sitePath}js/layui/css/layui.css">
+  <link href="${sitePath}styles/entry-edit.css" rel="stylesheet" type="text/css">
+
+<body>
+ <div class="main">
+ <fieldset class="layui-elem-field layui-field-title" style="margin: 2px;">
+  <legend>图文</legend>
+</fieldset>
+
+<form class="layui-form" action="">
+<% if(classify=="article"){ %>
+ <div  style="padding: 5px 0 5px 105px;height:30px">
+ <span id="msg" style="color:#C00000;display: block;padding: 5px">
+ 温馨提示:标题和描述可以为空,图片为必须哦</span>
+ </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">标题</label>
+    <div class="layui-input-block">
+      <input id="title" type="text" style="width: 850px" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input"
+     <% if(isNotEmpty(entry)){ %>
+      value="${entry.title}";
+     <% }%>
+      >
+    </div>
+  </div>
+
+ <div class="layui-form-item layui-form-text" style="margin-bottom:0">
+    <label class="layui-form-label">描述</label>
+    <div class="layui-input-block">
+      <textarea id="entry-desc" placeholder="请输入内容"></textarea>
+    </div>
+  </div>
+    <div style="height:20px;padding-left: 110px;padding-top:3px;">
+    <span id="msg-pic" style="color:#C00000;display: block;"> </span>
+    </div>
+    <% } %>
+   <div class="layui-form-item">
+    <label class="layui-form-label">图片</label>
+    <div class="layui-input-block">
+    <div class="layui-btn-group">
+	    <button class="layui-btn layui-btn-small" data-method="setDragMode" data-option="move" type="button" title="Move">
+	        <span class="icon icon-move"></span>
+	     </button>
+	    <button class="layui-btn layui-btn-small" data-method="setDragMode" data-option="crop" type="button" title="Crop">
+	       <span class="icon icon-crop"></span>
+	     </button>
+	      <button class="layui-btn layui-btn-small" data-method="zoom" data-option="0.1" type="button" title="Zoom In">
+	              <span class="icon icon-zoom-in"></span>
+	      </button>
+	      <button class="layui-btn layui-btn-small" data-method="zoom" data-option="-0.1" type="button" title="Zoom Out">
+	              <span class="icon icon-zoom-out"></span>
+	      </button>
+	      <button class="layui-btn layui-btn-small" data-method="rotate" data-option="-45" type="button" title="Rotate Left">
+	       <span class="icon icon-rotate-left"></span>
+	     </button>
+	      <button class="layui-btn layui-btn-small" data-method="rotate" data-option="45" type="button" title="Rotate Right">
+	      <span class="icon icon-rotate-right"></span>
+		 </button>
+    </div>
+     <div class="layui-btn-group">
+          <button class="layui-btn layui-btn-small" data-method="disable" type="button" title="Disable">
+              <span class="icon icon-lock"></span>
+          </button>
+          <button class="layui-btn layui-btn-small" data-method="enable" type="button" title="Enable">
+              <span class="icon icon-unlock"></span>
+          </button>
+          <button class="layui-btn layui-btn-small" data-method="clear" type="button" title="Clear">
+              <span class="icon icon-remove"></span>
+          </button>
+          <button class="layui-btn layui-btn-small" data-method="reset" type="button" title="Reset">
+              <span class="icon icon-refresh"></span>
+          </button>
+          <button class="layui-btn layui-btn-small" data-method="destroy" type="button" title="Destroy">
+              <span class="icon icon-off"></span>
+          </button>
+        </div>
+          <div class="layui-btn-group">
+          <label class="layui-btn layui-btn-small active" data-method="setAspectRatio" data-option="1.7777777777777777" title="Set Aspect Ratio">
+            <input class="sr-only" lay-ignore id="aspestRatio1" name="aspestRatio" value="1.7777777777777777" type="radio">
+            <span data-toggle="tooltip" title="">
+              16:9
+            </span>
+          </label>
+          <label class="layui-btn layui-btn-small" data-method="setAspectRatio" data-option="1.3333333333333333" title="Set Aspect Ratio">
+            <input class="sr-only" lay-ignore id="aspestRatio2" name="aspestRatio" value="1.3333333333333333" type="radio">
+            <span  data-toggle="tooltip" title="">
+              4:3
+            </span>
+          </label>
+          <label class="layui-btn layui-btn-small" data-method="setAspectRatio" data-option="1" title="Set Aspect Ratio">
+            <input class="sr-only" lay-ignore id="aspestRatio3" name="aspestRatio" value="1" type="radio">
+            <span data-toggle="tooltip" title="">
+              1:1
+            </span>
+          </label>
+          <label class="layui-btn layui-btn-small" data-method="setAspectRatio" data-option="0.6666666666666666" title="Set Aspect Ratio">
+            <input class="sr-only" lay-ignore  id="aspestRatio4" name="aspestRatio" value="0.6666666666666666" type="radio">
+            <span data-toggle="tooltip" title="">
+              2:3
+            </span>
+          </label>
+          <label class="layui-btn layui-btn-small" data-method="setAspectRatio" data-option="NaN" title="Set Aspect Ratio">
+            <input class="sr-only" lay-ignore id="aspestRatio5" name="aspestRatio" value="NaN" type="radio">
+            <span data-toggle="tooltip" title="">
+              Free
+            </span>
+          </label>
+        </div>
+        <div class="layui-btn-group">
+         <label class="layui-btn layui-btn-small">
+         <input class="sr-only" id="inputImage" name="file" type="file" accept="image/jpeg,image/jpg,image/png"/>
+              <span class="openfileicon" title="请打开你的文件...">打开图片</span>
+         </label>
+        <a class="layui-btn layui-btn-small" onclick="uploadImage()" title="上传到云端...">
+              <span class="uploadicon">上传图片</span>
+        </a>
+      </div>
+       <div class="layui-btn-group">
+        <% if(isNotEmpty(entry)){ %>
+         <a class="layui-btn layui-btn-small  p-btn"  onclick="delEntry()"  title="删除图文...">
+              <span class="delicon">删除图片</span>
+        </a>
+        <%}%>
+      </div>
+  </div>
+  </div>
+  </form>
+  <div class="layui-form-item" style="display: flex;">
+   <div style="width: 60%;padding: 0 5px 0 110px;flex-grow:1">
+	   <div class="img-container">
+	          <img id="image" 
+	            <% if(isNotEmpty(entry.imgUrl)){ %>
+					src="${sitePath}entry/image/${entry.id}.jpg?t=${version}" <%}%> >
+	   </div>
+   </div>
+   <div style="width: 40%;padding: 0 5px 0 20px">
+    	<div class="docs-preview clearfix">
+          <div class="img-preview preview-lg"></div>
+          <div class="img-preview preview-md"></div>
+          <div class="img-preview preview-sm"></div>
+          <div class="img-preview preview-xs"></div>
+        </div>
+        <div class="docs-data clearfix">
+          <div class="input-group">
+            <label class="input-group-addon right" for="dataX">X</label>
+            <input class="form-control" id="dataX" type="text" placeholder="x">
+            <span class="input-group-addon left">px</span>
+          </div>
+          <div class="input-group">
+            <label class="input-group-addon right" for="dataY">Y</label>
+            <input class="form-control" id="dataY" type="text" placeholder="y">
+            <span class="input-group-addon left">px</span>
+          </div>
+          <div class="input-group">
+            <label class="input-group-addon right" for="dataWidth">Width</label>
+            <input class="form-control" id="dataWidth" type="text" placeholder="width">
+            <span class="input-group-addon left">px</span>
+          </div>
+          <div class="input-group">
+            <label class="input-group-addon right" for="dataHeight">Height</label>
+            <input class="form-control" id="dataHeight" type="text" placeholder="height">
+            <span class="input-group-addon left">px</span>
+          </div>
+          <div class="input-group">
+            <label class="input-group-addon right" for="dataRotate">Rotate</label>
+            <input class="form-control" id="dataRotate" type="text" placeholder="rotate">
+            <span class="input-group-addon left">deg</span>
+          </div>
+        </div>
+     </div>
+  </div>
+</div>
+<input type="hidden" id="topicId"  value="${topicId}">
+<input id="imgurl" type="hidden"
+  <% if(isNotEmpty(entry)){ %>
+               value="${entry.imgUrl}" 
+              <% }%>
+>
+<input id="entry" type="hidden"
+        <% if(isNotEmpty(entry)){ %>
+               value="${entry.id}" 
+              <% }else { %>
+               value="${entryId}"
+                <%} %>
+       >
+</body>
+<div id="load_desc" style="display: none;">${entry.desc!""}</div>
+<script src="${sitePath}js/cropper/cropper.js"></script>
+<script src="${sitePath}js/cropper/main.js"></script>
+ 
+  <script type="text/javascript">
+  var editor;
+  $(function(){
+	  <% if(classify=="article"){ %>
+	  editor=CKEDITOR.replace('entry-desc');
+	  <%}%>
+	  <% if(isNotEmpty(entry)){%>
+	  editor.setData($("#load_desc").html());
+     <%}%>
+  })
+  function uploadImage(){
+	   var result= $("#image").cropper("getCroppedCanvas");
+       if(null==result){
+    	   $("#msg").html("图片不能为空!");
+    	   return false;
+       }
+	   var data= result.toDataURL("image/jpeg");
+	   data=data.split(",")[1];
+	   var title,desc;
+	   <% if(classify=="article"){ %> 
+	    title=$("#title").val();
+	    desc=editor.getData();
+	  <% } %>
+	   var imgurl=$("#imgurl").val();
+	   var topic=$("#topicId").val();
+       var entryId=$("#entry").val();
+	   var url_="${sitePath}entry/imageupload";
+	   if(entryId.length>0 && isUpdate=='is'){
+			  url_="${sitePath}entry/update/imageupload";
+	   }
+	   $.ajax({
+			url : url_,
+			contentType: "application/x-www-form-urlencoded",
+			dataType:"json",
+			data :{id:$("#entry").val(),imagedata:data,width:$("#dataWidth").val(),height:$("#dataHeight").val(),"title":title,"desc":desc,"topic":topic},
+			cache: false,
+			async:false,
+			beforeSend:function(XMLHttpRequest){
+				layer.load();
+	         },
+			method : "post",
+			success : function(json) {
+				layer.closeAll('loading');
+				if(json.isPass=="ok"){
+					if(json.update=="is"){
+						parent.setUpdateEntryCover(json.entry);
+					}else{
+					  parent.setEntryCover(json.entry);
+					}
+				var index = parent.layer.getFrameIndex(window.name); 
+				parent.layer.close(index); 
+				}else{
+					$("#msg-pic").html(json.warn);
+				}
+			} ,error:function(XMLHttpRequest, textStatus, errorThrown){
+	 	    	 if(XMLHttpRequest.status==500){
+	 	    		 layer.msg(XMLHttpRequest.responseText);
+	 	    	 }
+	 	     }
+		});
+	   return false;
+  }
+  var isUpdate='${uptoken!"no"}';
+  </script>
+
+</html>

@@ -1,0 +1,452 @@
+<style type="text/css">
+        .content{
+    		overflow: hidden;
+		}
+		.c-plist {
+   	 	margin-right: -50px;
+    	overflow: hidden;
+		}
+		ol, ul {
+	    	list-style: outside none none;
+		}
+		.c-plist .item {
+		    float: left;
+		    margin: 30px 20px 0 0;
+		    overflow: hidden;
+		    position: relative;
+		    background-color: #eee;
+		}
+		.c-plist .item .pic{
+		  display: block;
+          margin-bottom: 15px;
+		}
+		.c-plist .item .title{
+		display: block;
+		
+		}
+		.c-plist .item .desc{
+		display: block;
+		}
+		.c-plist .item .a{
+		 text-decoration: none;
+		}
+		.c-plist .item .t{
+		 color: #666666;
+		}
+		.c-plist .item .d{
+		 color: #222;
+		}
+		.panel input {
+		  width: 180px;height: 30px;
+		}
+		.panel td {
+		padding: 5px;
+		} 
+		  .background-img {
+		    background-size: cover;
+		    transform: scale(1);
+		    background-repeat: no-repeat;
+		    background-position: 50% 50%;
+				}
+ 
+		.t_img {
+		    width: 260px;
+		    height: 260px;
+		    display: inline-block;
+		}
+		.tag {
+    bottom: 10px;
+    left: 5px;
+    display: flex;
+    height: 70px;
+    width: 260px;
+}
+.tag .c_nav {
+    padding: 5px;
+    text-align: center;
+    width: 70px;
+}
+.tag .content {
+    width: 100%;
+    height: 70px;
+    color: #989898;
+}
+ .grade {
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: inline-block;
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    z-index: 90;
+    background: url(${sitePath}images/ico/star_s.png) 5px center no-repeat scroll rgba(74, 74, 74, 0.6);
+    border-radius: 3px;
+    overflow: hidden;
+    padding: 5px 10px 5px 25px;
+}
+.tag .content .author {
+    width: 100%;
+    padding: 10px 2px 2px 10px;
+}
+.tag .content .title {
+    width: 100%;
+    height:40px;
+    overflow:hidden;
+    padding: 0px 2px 2px 10px;
+}
+ .tag img {
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(225, 225, 225);
+    border-image: initial;
+    height: 60px;
+    width: 60px;
+}
+.ready {
+    background: rgba(220,220,220,0.9) none repeat scroll 0 0;
+    border-radius: 3px;
+    color: #FF0000;
+    font-size:15px;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 5px 10px;
+    position: absolute;
+    right: 15px;
+    bottom: 75px;
+    z-index: 190;
+}
+.layui-input-inline{
+ width: 220px !important;
+}
+.layui-input{
+ width: 220px;
+}
+.layui-form-item .layui-label-inline {
+    float: left;
+    width: 100px;
+}
+.layui-btn-small{
+ width: 100px;
+}
+ </style>
+  
+</head>
+ <div style="padding:10px">
+ <blockquote class="layui-elem-quote layui-quote-nm">
+  <legend>查询</legend>
+  <div class="layui-field-box">
+   <div class="layui-form" >
+    <div class="layui-form-item">
+    <div class="layui-inline">
+       <div class="layui-label-inline">
+         <input  class="t-check" checked=""  type="checkbox"  value="title_" lay-skin="primary" title="标题">
+       </div>
+      <div class="layui-input-inline">
+        <input id="title_" type="text" class="layui-input">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <div class="layui-label-inline">
+      <input  class="t-check"  type="checkbox" lay-skin="primary" value="from_url_"  title="formURL">
+      </div>
+      <div class="layui-input-inline">
+        <input id="from_url_" type="text"  class="layui-input">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <div class="layui-label-inline">
+      <input  class="t-check"  type="checkbox" value="img_url_" lay-skin="primary"   title="imgURL"></div>
+      <div class="layui-input-inline">
+        <input id="img_url_" type="text" type="text" class="layui-input">
+      </div>
+    </div>
+  </div>
+   <div class="layui-form-item">
+    <div class="layui-inline">
+      <div class="layui-label-inline">
+      <input  class="t-check"  type="checkbox" value="classify_" lay-skin="primary" title="分类"></div>
+      <div class="layui-input-inline">
+         <select id="classify_">
+          <option value="article">图文</option>
+          <option value="photo">相册</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+    <div class="layui-inline">
+      <div class="layui-label-inline">
+      <input  class="t-check" type="checkbox" value="type_" lay-skin="primary" title="类型"></div>
+      <div class="layui-input-inline">
+         <select id="type_" lay-filter="typeFilter">
+         <option value=""></option>
+         <% for(var type in types) { %>
+          <option value="${type.dictitemName}">${type.dictitemValue}</option>
+          <% } %>
+        </select>
+      </div>
+    </div>
+     <div class="layui-inline">
+      <div class="layui-label-inline">
+      <input  class="t-check" type="checkbox" value="tags_" lay-skin="primary" title="标签"></div>
+      <div class="layui-input-inline">
+         <select lay-filter="tagsFilter" id="tags_">
+        </select>
+      </div>
+    </div>
+    <div class="layui-inline">
+      <div class="layui-label-inline">
+      <input  class="s-check" lay-filter="isFilter"  type="checkbox" value="is_top_" lay-skin="primary" title="置顶" ></div>
+      <div class="layui-input-inline">
+         <input type="checkbox" lay-filter="isFilter" id="is_top_" lay-skin="normal" title="是否置顶">
+      </div>
+    </div>
+     <div class="layui-inline">
+      <div class="layui-label-inline">
+       <input  class="s-check" lay-filter="isFilter" type="checkbox" value="is_carousel_" lay-skin="primary" title="轮播"></div>
+      <div class="layui-input-inline">
+         <input type="checkbox" lay-filter="isFilter" id="is_carousel_"  lay-skin="normal" title="是否轮播">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <div class="layui-label-inline">
+      <input  class="m-check"   type="checkbox" value="grade_" lay-skin="primary" title="分数"></div>
+      <div class="layui-input-inline" style="width: 95px !important;">
+        <input type="text" maxlength="8" id="min-grade_"  class="layui-input" style="width:95px" >
+      </div>
+      <div class="layui-form-mid">-</div>
+      <div class="layui-input-inline" style="width: 95px !important;">
+        <input type="text" maxlength="8" id="max-grade_" class="layui-input" style="width:100px">
+      </div>
+    </div>
+  </div>
+    <div class="layui-form-item">
+     <div class="layui-inline">
+      <div class="layui-label-inline">
+       <input  class="m-check" type="checkbox" value="share_" lay-skin="primary" title="分享"></div>
+      <div class="layui-input-inline" style="width: 95px !important;">
+        <input type="text" maxlength="20" id="min-share_" class="layui-input" style="width:95px" >
+      </div>
+      <div class="layui-form-mid">-</div>
+      <div class="layui-input-inline" style="width: 100px !important;">
+        <input type="text" maxlength="20" id="max-share_"  class="layui-input" style="width:100px">
+      </div>
+    </div>
+    <div class="layui-inline">
+      <div class="layui-label-inline">
+      <input  class="m-check"  type="checkbox" value="collect_" lay-skin="primary" title="收藏"></div>
+      <div class="layui-input-inline" style="width:95px !important;">
+        <input type="text" maxlength="20" id="min-collect_" class="layui-input" style="width:95px" >
+      </div>
+      <div class="layui-form-mid">-</div>
+      <div class="layui-input-inline" style="width: 100px !important;">
+        <input type="text" maxlength="20" id="max-collect_" class="layui-input" style="width:100px">
+      </div>
+    </div>
+     <div class="layui-inline">
+      <div class="layui-label-inline">
+      <input  class="m-check"  type="checkbox" value="entry_num_" lay-skin="primary" title="单张"></div>
+      <div class="layui-input-inline" style="width:95px !important;">
+        <input type="text" maxlength="8" id="min-entry_num_" class="layui-input" style="width:95px" >
+      </div>
+      <div class="layui-form-mid">-</div>
+      <div class="layui-input-inline" style="width: 100px !important;">
+        <input type="text" maxlength="8" id="max-entry_num_"  class="layui-input" style="width:100px">
+      </div>
+    </div>
+    </div>
+    <div class="layui-form-item">
+       <div class="layui-inline">
+      <div class="layui-label-inline">
+       <input  class="t-check"  type="checkbox" value="status_" lay-skin="primary" title="状态"></div>
+      <div class="layui-input-inline">
+         <select id="status_">
+          <option value="1">发布</option>
+          <option value="2">预发布</option>
+          <option value="3">违规</option>
+          <option value="0">删除</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+     <div class="layui-inline">
+      <div class="layui-label-inline">
+        <input  class="t-check"   type="checkbox" value="desc_" lay-skin="primary" title="描述"></div>
+       <div class="layui-input-inline">
+           <input type="text"  id="desc_" class="layui-input">
+       </div>
+    </div>
+    <div class="layui-inline">
+     <div class="layui-label-inline">
+      <input  class="c-check"   type="checkbox" value="create_time_" lay-skin="primary" title="日期"></div>
+      <div class="layui-input-inline">
+       <input class="layui-input" style="width: 100%" placeholder="开始时间-结束时间" id="create_time_">
+      </div>
+     </div>
+    </div>
+    <div class="layui-form-item">
+       <div class="layui-label-inline"></div>
+       <div class="layui-input-inline">
+       <button class="layui-btn layui-btn-small" onclick="queryTopic()">查询</button>
+       <button class="layui-btn layui-btn-small" onclick="reset()">重置</button>
+        </div>
+     </div>
+   </div>
+  </div>
+  </blockquote>   
+<fieldset class="layui-elem-field layui-field-title">
+  <legend>主题</legend>
+  <div id="topic_content" style="padding:0 5px 0 10px"  class="layui-field-box">
+  </div>
+  <div  id="pagination" style="padding:0 5px 0 10px"></div>
+</fieldset> 
+ 
+ </div>
+<script>
+var m1="";
+var m2="";
+var laypage,layer,form;
+
+layui.use(['laypage', 'layer','form'], function(){
+	 laypage = layui.laypage;
+	 layer=layui.layer;
+	 form = layui.form;
+	 form.on('checkbox', function(data){
+		 var elem=data.elem;
+		 if(elem.checked){
+			 $(elem).prop("checked",true);
+		 }
+		});
+	 form.render();
+	 form.on('select(typeFilter)', function(data){
+		  $.ajax({
+			     url : "${sitePath}topic/querytags?type="+data.value,
+			     dataType :"json",
+			     async:false,
+			     method : "post",
+			     beforeSend:function(XMLHttpRequest){
+		        },
+			     success : function(jsons){
+			    	 $("#tags").html("");
+			    	 $.each(jsons,function(index,item){
+			    	  $("#tags_").append("<option value=\""+item.dictitemName+"\">"+item.dictitemValue+"</option>")
+			    	 });
+			    	 form.render('select');
+			     },error:function(XMLHttpRequest, textStatus, errorThrown){
+			     }
+			 }); 
+		});  
+});
+
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+  laydate.render({
+	    elem: '#create_time_'
+	    ,type: 'datetime'
+	    ,range: true
+	    ,done: function(value, date, endDate){
+	    	 m1=value.split(" - ")[0];
+	    	 m2=value.split(" - ")[1];
+	      }
+	  });
+});
+var reset=function(){
+	$('input:checkbox').prop("checked", false);
+	form.render('checkbox');
+}
+</script>
+<script type="text/javascript">
+    function returnParams(){
+    	  var params=[];
+		   $(".t-check").each(function(){
+			   if($(this).prop("checked")){
+				   var v=$("#"+$(this).val()).val();
+				   params.push("{\"name\":\""+$(this).val()+"\",\"value\":\""+v+"\"}");
+			   }
+		   })
+		    $(".s-check").each(function(){
+			   if($(this).prop("checked")){
+				   var v=$("#"+$(this).val()).prop("checked");
+				   params.push("{\"name\":\""+$(this).val()+"\",\"value\":\""+(v==true?1:0)+"\"}");
+			   }
+		   })
+		    $(".m-check").each(function(){
+			   if($(this).prop("checked")){
+				   var v1=$("#max-"+$(this).val()).val();
+				   var v2=$("#min-"+$(this).val()).val();
+				   params.push("{\"name\":\""+$(this).val()+"\",\"max-value\":\""+v1+"\",\"min-value\":\""+v2+"\"}");
+			   }
+		   })
+		     $(".c-check").each(function(){
+			   if($(this).prop("checked")){
+				   params.push("{\"name\":\""+$(this).val()+"\",\"max-value\":\""+m2+"\",\"min-value\":\""+m1+"\"}");
+			   }
+		   })
+    	return params;
+    }
+	 var queryTopic=function(){
+		var params=returnParams();
+			 $.ajax({
+			     url : "${sitePath}topic/querycount?params="+params.toString(),
+			     dataType :"json",
+			     async:false,
+			     method : "post",
+			     beforeSend:function(XMLHttpRequest){
+		        },
+			     success : function(data){
+			    	 initPagination(data.count);
+			     },error:function(XMLHttpRequest, textStatus, errorThrown){
+			     }
+			 }); 
+			};
+			
+			var initPagination = function(total_item) {
+				laypage.render({
+					  elem: 'pagination'
+					  ,limit:12
+					  ,count: total_item
+					  ,layout: ['count', 'prev', 'page', 'next', 'skip']
+					  ,jump: function(obj){
+						  pageselectCallback(obj.curr); 
+					  }
+					});
+				
+			 };
+			var  pageselectCallback=function(page_index, jq){
+				var page=parseInt(page_index);
+				var params=returnParams();
+		    	 $.ajax({
+		    	     url : "${sitePath}topic/query?page="+page+"&params="+params.toString(),
+		    	     dataType :"html",
+		    	     async:false,
+		    	     method : "post",
+		    	     beforeSend:function(XMLHttpRequest){
+		            },
+		    	     success : function(data){
+		    	    	 $("#topic_content").empty().append(data);
+		    	     },error:function(XMLHttpRequest, textStatus, errorThrown){
+		    	     }
+		    	 }); 
+				return false;
+			}  
+		var goedit=function(id){
+			 var index=layer.open({
+				    type: 2,
+				    title: '主题编辑',
+				    fix: false,
+				    maxmin: true,
+				    shadeClose: true,
+				    shade:false,
+				    content: '${sitePath}topic/edit.html?topic='+id,
+				    zIndex: layer.zIndex, //重点1
+			        success: function (layero) {
+			            layer.setTop(layero); //重点2
+			        },
+				    end: function(){
+				    }
+				  });
+			 layer.full(index);
+	}
+		
+</script>
+</html>

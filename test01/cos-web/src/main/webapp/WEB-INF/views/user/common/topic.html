@@ -1,0 +1,35 @@
+<% for(var topic in topics){%>
+   <li class="p_li">
+     <div class="p_img">
+      <a href="${sitePath}topic/${topic.classify}/${topic.id}.html" target="_blank" >
+       <div class="jqthumb">
+		<div class="img" style="background-image: url(${imgUrl}${topic.id}.jpg?t=${topic.currVersion});"></div>
+	   </div>
+       </a>
+        <% if(isowner=="is" && topic.status==2){%>
+        <a class="ready">私</a> 
+        <%}%>
+       <% 
+        if(isowner=="no"){
+        if(topic.isCollect==true) { %>
+         <a  class="collect">已收藏</a>  
+        <% } else { %> 
+        <a onclick="collectTopic(this)" data-id="${topic.id}" class="collect">收藏</a>  
+        <% }
+        }
+        if(isowner=="is"){ %>
+        <a class="edit_btn"  target="_blank" href="${sitePath}edit/topic/edit/${topic.id}">编辑</a>
+        <% } %>
+        <div class="desc"> ${topic.desc!""}</div>
+         <div class="p_tag">
+		 <div class="title">${topic.title!""}</div> 
+		 <div class="tags">
+			 <span class="star" title="评分">${topic.collectString}</span> 
+			 <span class="transpond" title="分享">${topic.shareString}</span> 
+			 <span class="entrypage" title="单张">${topic.entryNum}</span>
+			 <a class="type"  target="_blank" href="${sitePath}topic/${topic.type}/index.html">${topic.typeName}</a>
+		 </div>
+		</div>
+       </div>
+     </li>
+  <% } %>

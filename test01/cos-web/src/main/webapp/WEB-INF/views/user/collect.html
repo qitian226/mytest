@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<% include("/common/include.html"){} %>
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/site/user/collect.js"></script>
+<link href="${sitePath}styles/main.css" rel="stylesheet" type="text/css">
+<link href="${sitePath}styles/userstyle.css" rel="stylesheet" type="text/css">
+<title>${user.nickname}的色彩主站-收藏</title>
+
+</head>
+<body>
+<%
+include("/common/header.html"){}
+%>
+<div class="top_panel">
+<%
+include("common/top.html"){}
+%>
+</div>
+<div id="main">
+<div id="floder">
+  <div id="nt"></div>
+ </div>
+</div>
+ <%
+include("/common/footer.html"){}
+%>
+</body>
+ 
+<script type="text/javascript">
+var topictype=new Array(${types});
+var userid="${user.id}";
+</script>
+</html>

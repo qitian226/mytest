@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <link href="${sitePath}js/layer-v3.0.3/layer/skin/default/layer.css" rel="stylesheet" type="text/css">
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/jquery-3.1.1.min.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/site/regular.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/site/common.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/jquery.md5.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/layer-v3.0.3/layer/layer.js"></script>
+ <script type="text/javascript" charset="utf-8" src="${sitePath}js/site/email/email.js"></script>
+ <link href="${sitePath}js/layer-v3.0.3/layer/skin/default/layer.css" rel="stylesheet" type="text/css">
+ <link href="${sitePath}styles/email.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+ <div id="content">
+  <div class="head">
+   <span class="box">${formUser.nickname} 的来信</span>
+  </div>
+  <div id="msg" class="msg">
+  <ul id="main_body">
+   <li>
+  <div style="width: 100%;text-align: center;padding:10px 0">
+    <% if(isNotEmpty(emails)){%>
+    <span id="new_email" class="n_email">新的来信</span>
+    <% } else {%>
+     <span id="new_email" class="n_email">没有新的来信</span>
+    <%}%>
+  </div>
+  </li>
+  <% for(email in emails) {%>
+  <li>
+   <div class="left">
+	   <a class="leftuser"><img src="${headUrl}${formUser.id}.jpg"></a>
+	   <div  class="item">
+	   <div class="arrow_box">
+	    ${email.message}
+	   <span class="email">${email.createTimeString} </span></div>
+	   </div>
+   </div>
+  </li>
+  <%}%>
+  </ul>
+  </div>
+  <div class="info">
+  <textarea id="msg_content" placeholder="@ ${formUser.nickname}"></textarea>
+  </div>
+  <div class="btn">
+    <a onclick="histoyEmail(1)" class="history">所有的信件</a>
+   <a onclick="sendEmail()" class="send">发 送</a>
+  </div>
+ </div>
+ </body>
+ <script type="text/javascript">
+ var userid='${formUser.id}';
+ </script>
+ </html>

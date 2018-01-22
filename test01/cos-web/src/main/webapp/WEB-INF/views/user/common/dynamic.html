@@ -1,0 +1,35 @@
+<% 
+ var prev_t=prev_date;
+ for(topic in topics){
+  %>
+   <div class="item">
+   <% if(topic.createTimeString!=prev_t){%>
+      <div class="time">
+	    ${topic.createTimeString}
+	   </div>
+   <%}
+    prev_t=topic.createTimeString;
+    %>
+    <input class="prev_date" type="hidden" value=${prev_t}>
+ 	 <div class="item_content">
+		 <div class="item_title">
+		 [主题]<a href="${sitePath}topic/${topic.classify}/${topic.id}.html" target="_blank" > ${topic.title}</a>
+		 </div>
+		  <div class="item_desc">
+		    ${topic.desc}​​​​
+		  </div>
+		  <div  class="item_img">
+		   <% for(entry in topic.entrys) {%>
+		     <a class="item_classify" href="${sitePath}topic/${topic.classify}/${topic.id}.html" target="_blank">
+		       <div  class="b_img"  style="background-image: url(${imgUrl}${entry.id}.jpg?t=${entry.currVersion});"></div>
+		      </a>
+		   <%}%>
+		  </div>
+		  <div  class="item_tags">
+		 <span> 共彩集  ${topic.entryNum} 张单片  于  ${topic.createTime,dateFormat="HH:mm:ss"}</span>
+		 <span class="star" title="评分">${topic.gradeString}</span>
+		 <span class="transpond" title="分享">${topic.shareString}</span>
+		</div>
+  	</div>
+ </div>
+ <%}%>

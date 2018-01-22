@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <div class="page_list">
+        <% if(pageNo!=1) {%>  
+        <a href="${sitePath}${url}?pageno=1&column=${column}" class="top_page">首页</a>  
+        <a href="${sitePath}${url}?pageno=${pageNo-1}&column=${column}" class="page_prev">上一页</a>  
+        <%}    
+         if(pageNo-showPages/2 > 0){  
+             start = pageNo-(showPages/2);
+            if(showPages > totalPage){
+                start = 1;
+               } 
+            }
+            else {
+             start = 1;
+         }
+        if(totalPage > showPages){  
+            end = (start+showPages-1); 
+            if(end > totalPage){  
+                start = totalPage-showPages+1;  
+                end = totalPage;  
+              } 
+            }
+         else {
+            end = totalPage;  
+           }
+          var page;
+          for(page=start;page<=end;page++){
+             if(page==pageNo){ %>  
+                <a href="${sitePath}${url}?pageno=${page}&column=${column}" class="current">${page}</a> 
+               <% } 
+             else { %>
+                <a href="${sitePath}${url}?pageno=${page}&column=${column}">${page}</a>  
+            <% } 
+            }
+         if(pageNo!=totalPage) { %> 
+            <a href="${sitePath}${url}?pageno=${pageNo+1}&column=${column}" class="page_next">下一页</a>  
+            <a href="${sitePath}${url}?pageno=${totalPage}&column=${column}" class="end_page">尾页</a>  
+        <% }%> 
+    </div>
+</html>

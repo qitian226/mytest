@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<% include("/common/include.html"){} %>
+<link href="${sitePath}styles/main.css" rel="stylesheet" type="text/css">
+<link href="${sitePath}styles/topic.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/site/regular.js"></script>
+<script type="text/javascript" charset="utf-8" src="${sitePath}js/site/topic/flat_topic.js"></script>
+<title>最美 - <% if(isNotEmpty(topic.title)){%>
+	${topic.title} <%}else{%>默认主题 <%}%></title>
+</head>
+<body>
+	<% include("/common/header.html"){} %>
+	<div id="topic" class="t_content">
+		<% include("/common/share.html"){} %>
+		<div id="topic_content">
+			<div class="author-panel">
+				<a href="${sitePath}u/${account}"><img src="${headUrl}${topic.createBy}.jpg"></a>
+			</div>
+			<div class="author-panel">
+				<div style="padding: 0px 5px">
+					<% if(user.sex==0){%> <span class="man_name">${user.nickname}</span><%}
+					else {%> 
+					<span class="woman_name">${user.nickname}</span>
+                       <%}%>
+                   <% if(isNotEmpty(user.vip) && user.vip>=1){ %>
+                   <span class="vip_t">${user.vip}</span>
+					<% } %>
+					<div class="vip_l">
+						<% if(isNotEmpty(user.level)){ 
+						for(var i=0;i<user.level;i++) 
+						{%> <span class="star_s"></span>
+						<% }}%> 
+					</div>
+				</div>
+			</div>
+			<div class="author-panel">
+				<div class="a_tags">
+					<% if(isNotEmpty(user.proviceName) &&
+					isNotEmpty(user.cityName)) { %> <span class="address">${user.proviceName}
+						${user.cityName}</span> <% } %> <span class="head-topic">${user.topicCount!0}
+						主题 ${user.entryCount!0} 单片</span>
+				</div>
+				<% if(isNotEmpty(attention.isAttention) &&
+				attention.isAttention){ %>
+				<div id="attention-panel">
+					<a data-id="${topic.createBy}" class="attention_btn">已关注</a>
+					<% if(isowner=="no"){ %> 
+					<a onclick="showEmail('${topic.createBy}')" class="letter_btn">私信</a> 
+						<%}%>
+				</div>
+				<% } else{if(isowner=="no"){ %>
+				<div id="attention-panel">
+					<a data-id="${topic.createBy}" onclick="attention(this)" class="attention_btn">关注</a> 
+					<a onclick="showEmail('${topic.createBy}')" class="letter_btn">私信</a>
+				</div>
+				<% } 
+				}%>
+				
+			</div>
+		</div>
+	</div>
+	<div id="main" style="width: 1300px; margin: 0 auto;">
+		<div class="title_background">
+			<div id="topic_title" class="t_title">
+				<% if(isNotEmpty(topic.title)){%>
+				<div class="title">
+					<h1 class="topic_title">${topic.title}</h1>
+				</div>
+				<%}%>
+				<div class="label">
+					<div class="tags">
+						<span>${topic.createTimeString}</span>
+                        <span class="star" title="积分">${topic.grade!0}</span>
+                        <span id="c_num" class="collect" title="收藏">${topic.collect!0}</span>
+						<span class="transpond" title="分享">${topic.share!0}</span>
+						<a class="type"><em>${topic.typeName!""}</em></a> 
+						<% if(isNotEmpty(topic.tagNames)){ for(var name in topic.tagNames){%>
+						<a class="i-label" href="#"><em>${name}</em></a>
+						<%}}%>
+						<% if(isowner=="no"){ if(iscollect==0){%>
+						 <a onclick="collect(this)" class="collect_btn"  data-id="${topic.id}">收藏</a>
+						<% } else { %>
+						 <a onclick="cancelCollect(this)" class="collect_btn"  data-id="${topic.id}">已收藏</a>
+						<% } }%>
+					</div>
+				</div>
+			</div>
+			<div class="topic_cover">
+				<a><img alt="" src="${imgUrl}${topic.id}.jpg?t=${topic.currVersion}" /></a>
+			</div>
+			<div class="topic_desc">
+				 ${topic.desc}
+			</div>
+		</div>
+		<% for(item in entrys){%>
+		<div id="e_${item.id}" class="entry_background">
+			<div class="entry_header">
+				<span class="num">${itemLP.index}</span>
+				<h2 class="title">${item.title}</h2>
+				<span class="date">${item.createTime,dateFormat="yyyy年MM月dd日 HH点mm分"}</span>
+			</div>
+			<div class="entry_img">
+				<a><img alt="${item.title}" src="${imgUrl}${item.id}.jpg?t=${item.currVersion}" /></a>
+			</div>
+			<div class="entry_desc">
+				<p>${item.desc}</p>
+			</div>
+			<div class="entry_comment">
+				<a data-id="${item.id}" class="comment_logo"
+					onclick="showComment(this)" title="">说 说&nbsp;(<lable
+						id="l_${item.id}">${item.commentNum}</lable>)
+				</a>
+				<a data-id="${item.id}" class="say_logo"
+					onclick="showSay(this)" title="">我也要说说
+				</a>
+			</div>
+		</div>
+		<%}%>
+	</div>
+	<% include("/common/footer.html"){} %>
+	<a id="b_top" class="backtop"></a>
+</body>
+<input id="curent_entry_id" type="hidden">
+<input id="topic_id" type="hidden" value="${topic.id}">
+<input id="focus_comment" type="hidden">
+<input id="focus_user" type="hidden">
+<div id="speak">
+	<a class="closeSpeak" onclick="closeComment()"></a>
+	<div id="star">
+		<span class="label">喜欢这个主题吗 画上你的星星吧</span>
+        <span class="s_grade">
+		<% if(accountgrade==0){ for(var i=1;i<=5;i++){%>
+		<a class="star" data-id="${i}" onclick="selectStar(this)" href="javascript:;">
+			<img src="${sitePath}images/ico/star_empty.png">
+		</a> <%}}else{ 
+		var grade=accountgrade/20; 
+		var difference=(100-accountgrade)/20;
+        for (var i=1;i<=grade;i++){ %>
+         <img src="${sitePath}images/ico/star.png"> <%} for(var
+			i=1;i<=difference;i++){%> 
+			<img src="${sitePath}images/ico/star_empty.png"> <%}}%>
+		</span>
+	</div>
+	<div class="comment">
+		<div class="textarea">
+			<textarea id="speak-content" maxlength="200"
+				style="resize: none;" placeholder=" 说说你的神评论..."></textarea>
+			<a class="btn" onclick="submitComment()"></a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$().ready(function(){
+	<% if(isNotEmpty(entryid)){ %>
+	$("html,body").animate({
+		scrollTop : $("#e_${entryid}").offset().top - 100
+	}, 500);
+	<% } %>
+})
+</script>
+</html>
