@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration> 
+    <classPathEntry location="D:\Tools\mysql-connector-java-5.1.30-bin.jar" />
+	<context id="mysql" defaultModelType="flat"
+		targetRuntime="MyBatis3">
+		<!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表； 一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖 -->
+		<property name="autoDelimitKeywords" value="false" />
+		<!-- 生成的Java文件的编码 -->
+		<property name="javaFileEncoding" value="UTF-8" />
+		<!-- 格式化java代码 -->
+		<property name="javaFormatester"
+			value="org.mybatis.generator.api.dom.DefaultJavaFormatester" />
+		<!-- 格式化XML代码 -->
+		<property name="xmlFormatester"
+			value="org.mybatis.generator.api.dom.DefaultXmlFormatester" />
+		<!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
+		<property name="beginningDelimiter" value="`" />
+		<property name="endingDelimiter" value="`" />
+		<!-- 必须要有的，使用这个配置链接数据库 @TODO:是否可以扩展 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://127.0.0.1:3306/cosdb" userId="root" password="123456">
+			<!-- 这里面可以设置property属性，每一个property属性都设置到配置的Driver上 -->
+		</jdbcConnection>	 
+		<javaTypeResolver
+			type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>		 
+		<javaModelGenerator targetPackage="com.cos.model"
+			targetProject="codetemp/src/main/java">
+			<!-- for MyBatis3/MyBatis3Simple 自动为每一个生成的类创建一个构造方法，构造方法包含了所有的field；而不是使用setester； -->
+			<property name="constructorBased" value="false" />
+
+			<!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+			<property name="enableSubPackages" value="true" />
+
+			<!-- for MyBatis3 / MyBatis3Simple 是否创建一个不可变的类，如果为true， 那么MBG会创建一个没有setester方法的类，取而代之的是类似constructorBased的类 -->
+			<property name="immutable" value="false" />
+
+			<!-- 设置一个根对象， 如果设置了这个根对象，那么生成的keyClass或者recordClass会继承这个类；在Table的rootClass属性中可以覆盖该选项 
+				注意：如果在key class或者record class中有root class相同的属性，MBG就不会重新生成这些属性了，包括： 1，属性名相同，类型相同，有相同的getester/setester方法； -->
+			<!-- <property name="rootClass" value="com._520it.mybatis.domain.BaseDomain" />-->
+
+			<!-- 设置是否在getester方法中，对String类型字段调用trim()方法 -->
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+	 
+		<sqlMapGenerator targetPackage="sqlmap"
+			targetProject="codetemp/src/main/resources">
+			<!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		 
+		<javaClientGenerator targetPackage="com.cos.dao"
+			type="XMLMAPPER" targetProject="codetemp/src/main/java">
+			<!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+			<property name="enableSubPackages" value="true" />
+
+			<!-- 可以为所有生成的接口添加一个父接口，但是MBG只负责生成，不负责检查 <property name="rootInterface" 
+				value=""/> -->
+		</javaClientGenerator>
+
+       
+		  <table tableName="entry" enableSelectByExample="true"> 
+		 </table>
+		 <table tableName="topic" enableSelectByExample="true"> 
+		 </table>
+		 <table tableName="comment" enableSelectByExample="true"> 
+		 </table>
+		  <table tableName="reply" enableSelectByExample="true"> 
+		 </table>
+		  <table tableName="grade" enableSelectByExample="true"> 
+		 </table>
+		   <table tableName="sys_account" enableSelectByExample="true"> 
+		 </table>
+		   <table tableName="attention_account" enableSelectByExample="true"> 
+		 </table>
+		  <table tableName="topic_to_tag" enableSelectByExample="true"> 
+		 </table>
+		 <table tableName="collect_folder" enableSelectByExample="true"> 
+		 </table>
+		 <table tableName="sys_email" enableSelectByExample="true"> 
+		 </table>
+		 <table tableName="fans" enableSelectByExample="true"> 
+		 </table>
+		 <table tableName="fans_group" enableSelectByExample="true">
+		 </table>
+		 <table tableName="full_index" enableSelectByExample="true">
+		 </table>
+		 <table tableName="img_file" enableSelectByExample="true">
+		 </table>
+		  <table tableName="city_code" enableSelectByExample="true">
+		 </table>
+		  <table tableName="province_code" enableSelectByExample="true">
+		 </table>
+  </context>
+</generatorConfiguration>
